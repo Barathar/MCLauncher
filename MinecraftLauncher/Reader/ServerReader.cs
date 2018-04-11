@@ -1,22 +1,19 @@
-﻿using MCLauncher.Configuration;
-using MCLauncher.Data;
+﻿using MCLauncher.Data;
 using MCLauncher.Utility;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
 namespace MCLauncher.Reader
 {
     public class ServerReader
-    {        
+    {
         public List<Server> Read(XDocument document)
-        {            
-            XElement versions = document.XPathSelectElement("root/versions");            
+        {
+            XElement versions = document.XPathSelectElement("root/versions");
 
-            List<Server> result = new List<Server>();            
+            List<Server> result = new List<Server>();
             foreach (var server in versions.Descendants("item"))
             {
                 result.Add(ReadServer(server));
@@ -28,19 +25,19 @@ namespace MCLauncher.Reader
         private Server ReadServer(XElement server)
         {
             Server result = new Server();
-            result.Name = ReadString(server, "name");
-            result.Version = ReadString(server, "version");
-            result.Ip = ReadString(server, "server/url");
-            result.State = ReadString(server , "state");
-            result.StatusUri = ReadUri(server, "status");
-            result.PatchNotesUri = ReadUri(server, "patchnotesUrl");
-            result.PatchFilesUri = ReadUri(server, "patchUrl");
+            result.Name = XElementExtender.ReadString(server, "name");
+            result.Version = XElementExtender.ReadString(server, "version");
+            result.Ip = XElementExtender.ReadString(server, "server/url");
+            result.State = XElementExtender.ReadString(server, "state");
+            result.StatusUri = XElementExtender.ReadUri(server, "status");
+            result.PatchNotesUri = XElementExtender.ReadUri(server, "patchnotesUrl");
+            result.PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl");
 
-            XElement launcherProfile = server.XPathSelectElement("launcherProfile"); 
+            XElement launcherProfile = server.XPathSelectElement("launcherProfile");
             result.LauncherProfileData = ReadLauncherProfileData(launcherProfile);
 
             XElement images = server.XPathSelectElement("style/images");
-            result.Image = ReadImage(images, "background") ?? result.Image;
+            result.Image = XElementExtender.ReadImage(images, "background") ?? result.Image;
             result.GrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.Image as Bitmap);
 
             return result;
@@ -48,46 +45,14 @@ namespace MCLauncher.Reader
         private LauncherProfileData ReadLauncherProfileData(XElement launcherProfile)
         {
             LauncherProfileData result = new LauncherProfileData();
-            result.Name = ReadString(launcherProfile, "name");
-            result.Type = ReadString(launcherProfile, "type");
-            result.Icon = ReadString(launcherProfile, "icon");
-            result.LastVersionId = ReadString(launcherProfile, "lastVersionId");
-            result.JavaArgs = ReadString(launcherProfile, "gameDir");
-            result.GameDirectory = ReadString(launcherProfile, "javaArgs");
+            result.Name = XElementExtender.ReadString(launcherProfile, "name");
+            result.Type = XElementExtender.ReadString(launcherProfile, "type");
+            result.Icon = XElementExtender.ReadString(launcherProfile, "icon");
+            result.LastVersionId = XElementExtender.ReadString(launcherProfile, "lastVersionId");
+            result.JavaArgs = XElementExtender.ReadString(launcherProfile, "gameDir");
+            result.GameDirectory = XElementExtender.ReadString(launcherProfile, "javaArgs");
 
             return result;
-        }
-
-        private string ReadString(XElement server, string itemName)
-        {
-            return server.XPathSelectElement(itemName).Value;
-        }
-        private Uri ReadUri(XElement item, string itemName)
-        {
-            return new Uri(item.XPathSelectElement(itemName).Value);
-        }
-        private Image ReadImage(XElement images, string itemName)
-        {
-            try
-            {
-                string filename = Path.Combine(Paths.CurrentDirectory, images.XPathSelectElement($"{itemName}/relPath").Value.Replace(@"/", "\\"));
-                if (File.Exists(filename))
-                {
-                    string hash = images.XPathSelectElement($"{itemName}/hash").Value;
-                    string localHash = MD5Hash.FromFile(filename);
-                    if (hash == localHash)
-                        return Image.FromFile(filename);
-                }
-
-                Uri imageUri = new Uri(images.XPathSelectElement($"{itemName}/url").Value);
-                Downloader.Download(imageUri, filename);
-
-                return Image.FromFile(filename);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using MCLauncher.Data;
-using System;
+using MCLauncher.Utility;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -13,29 +13,12 @@ namespace MCLauncher.Reader
 
             Serverstatus result = new Serverstatus();
 
-            result.Online = ReadOnline(root);
-            result.MessageOfTheDay = ReadMessageOfTheDay(root);
-            result.MaxPlayers = ReadMaxPlayer(root);
-            result.CurrentPlayers = ReadCurrentPlayers(root);
+            result.Online = XElementExtender.ReadBoolean(root, "online");
+            result.MessageOfTheDay = XElementExtender.ReadString(root, "motd");
+            result.MaxPlayers = XElementExtender.ReadInteger(root, "playerMax");
+            result.CurrentPlayers = XElementExtender.ReadInteger(root, "playerOnline");
 
             return result;
-        }
-
-        private bool ReadOnline(XElement root)
-        {
-            return Convert.ToBoolean(root.XPathSelectElement("online").Value);
-        }
-        private string ReadMessageOfTheDay(XElement root)
-        {
-            return root.XPathSelectElement("motd").Value;
-        }
-        private int ReadMaxPlayer(XElement root)
-        {
-            return Convert.ToInt32(root.XPathSelectElement("playerMax").Value);
-        }
-        private int ReadCurrentPlayers(XElement root)
-        {
-            return Convert.ToInt32(root.XPathSelectElement("playerOnline").Value);
-        }        
+        }     
     }
 }

@@ -124,6 +124,7 @@
     <Compile Include="Utility\LauncherProfilePatcher.cs" />
     <Compile Include="Utility\MD5Hash.cs" />
     <Compile Include="Utility\OutputConsole.cs" />
+    <Compile Include="Utility\XElementExtender.cs" />
     <EmbeddedResource Include="UI\Mainform.resx">
       <DependentUpon>Mainform.cs</DependentUpon>
     </EmbeddedResource>

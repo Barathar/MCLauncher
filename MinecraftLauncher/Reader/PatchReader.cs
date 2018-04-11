@@ -1,4 +1,5 @@
 ﻿using MCLauncher.Data;
+using MCLauncher.Utility;
 using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -37,10 +38,10 @@ namespace MCLauncher.Reader
         {
             PatchFile result = new PatchFile();
 
-            result.Filename = ReadString(item, "name");
-            result.DownloadUri = ReadUri(item, "url");
-            result.LocalDirectory = ReadString(item, "relPath");
-            result.Hash = ReadString(item, "hash");
+            result.Filename = XElementExtender.ReadString(item, "name");
+            result.DownloadUri = XElementExtender.ReadUri(item, "url");
+            result.LocalDirectory = XElementExtender.ReadString(item, "relPath");
+            result.Hash = XElementExtender.ReadString(item, "hash");
 
             return result;
         }
@@ -51,15 +52,6 @@ namespace MCLauncher.Reader
             result.LocalDirectory = item.Value;
 
             return result;
-        }
-
-        private string ReadString(XElement item, string itemName)
-        {
-            return item.XPathSelectElement(itemName).Value;
-        }
-        private Uri ReadUri(XElement item, string itemName)
-        {
-            return new Uri(item.XPathSelectElement(itemName).Value);
         }
     }
 }
