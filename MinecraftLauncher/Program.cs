@@ -12,7 +12,6 @@ namespace MinecraftLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Console.WriteLine("Starting...");
 
             //Console.SetOut(writer);
             Settings.Default.Load();
