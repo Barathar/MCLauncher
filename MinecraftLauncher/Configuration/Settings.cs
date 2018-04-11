@@ -25,7 +25,8 @@ namespace MCLauncher.Configuration
 
         public string ServerIp { get; set; } = "http://www.wirock.de/mclauncher/versions.xml";
         public Size Resolution { get; set; } = new Size(800, 600);
-        public int RAM { get; set; } = 4;        
+        public int RAM { get; set; } = 4;
+        public bool ShowDebugConsole { get; set; } = false;
 
         public void Load()
         {

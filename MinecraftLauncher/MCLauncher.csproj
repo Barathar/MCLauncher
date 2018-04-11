@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4D8D7F64-1342-4AEF-B164-06C79A3F8384}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>MCLauncher</RootNamespace>
     <AssemblyName>MCLauncher</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -123,6 +123,7 @@
     <Compile Include="Utility\ImageManipulation.cs" />
     <Compile Include="Utility\LauncherProfilePatcher.cs" />
     <Compile Include="Utility\MD5Hash.cs" />
+    <Compile Include="Utility\OutputConsole.cs" />
     <EmbeddedResource Include="UI\Mainform.resx">
       <DependentUpon>Mainform.cs</DependentUpon>
     </EmbeddedResource>

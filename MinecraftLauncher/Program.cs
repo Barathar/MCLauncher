@@ -11,10 +11,8 @@ namespace MinecraftLauncher
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            // Removed foo ...
+            Application.SetCompatibleTextRenderingDefault(false);                        
             
-            //Console.SetOut(writer);
             Settings.Default.Load();
             Application.Run(new Mainform());
         }

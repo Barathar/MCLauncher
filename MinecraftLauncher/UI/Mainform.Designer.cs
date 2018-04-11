@@ -33,6 +33,7 @@
             this.serverPanel = new System.Windows.Forms.FlowLayoutPanel();
             this.refreshButton = new System.Windows.Forms.PictureBox();
             this.settingsButton = new System.Windows.Forms.PictureBox();
+            this.consoleTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.overlay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.refreshButton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).BeginInit();
@@ -86,6 +87,19 @@
             this.settingsButton.TabStop = false;
             this.settingsButton.Click += new System.EventHandler(this.OnSettingsButtonClicked);
             // 
+            // consoleTextBox
+            // 
+            this.consoleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.consoleTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.consoleTextBox.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.consoleTextBox.Location = new System.Drawing.Point(148, 12);
+            this.consoleTextBox.Multiline = true;
+            this.consoleTextBox.Name = "consoleTextBox";
+            this.consoleTextBox.ReadOnly = true;
+            this.consoleTextBox.Size = new System.Drawing.Size(624, 495);
+            this.consoleTextBox.TabIndex = 5;
+            // 
             // Mainform
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -93,6 +107,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(784, 561);
+            this.Controls.Add(this.consoleTextBox);
             this.Controls.Add(this.settingsButton);
             this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.serverPanel);
@@ -109,6 +124,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.refreshButton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsButton)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -118,6 +134,7 @@
         private System.Windows.Forms.FlowLayoutPanel serverPanel;
         private System.Windows.Forms.PictureBox refreshButton;
         private System.Windows.Forms.PictureBox settingsButton;
+        private System.Windows.Forms.TextBox consoleTextBox;
     }
 }
 

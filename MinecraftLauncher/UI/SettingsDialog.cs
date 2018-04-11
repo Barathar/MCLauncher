@@ -41,6 +41,17 @@ namespace MCLauncher.UI
                 ramNumericUpDown.Value = value;
             }
         }
+        public bool Debug
+        {
+            get
+            {
+                return debugCheckBox.Checked;
+            }
+            set
+            {
+                debugCheckBox.Checked = value;
+            }
+        }
 
         public SettingsDialog(Style style)
         {
@@ -63,6 +74,10 @@ namespace MCLauncher.UI
             label3.BackColor = style.DialogBackgroundColor;
             label3.ForeColor = style.DialogFontColor;
 
+            label4.Font = new Font(FontLoader.MinecraftFont.Families[0], label4.Font.Size);
+            label4.BackColor = style.DialogBackgroundColor;
+            label4.ForeColor = style.DialogFontColor;
+
             serverIpTextBox.Font = new Font(FontLoader.MinecraftFont.Families[0], serverIpTextBox.Font.Size);
             serverIpTextBox.BackColor = style.DialogBackgroundColor;
             serverIpTextBox.ForeColor = style.DialogFontColor;
@@ -74,6 +89,9 @@ namespace MCLauncher.UI
             ramNumericUpDown.Font = new Font(FontLoader.MinecraftFont.Families[0], ramNumericUpDown.Font.Size);
             ramNumericUpDown.BackColor = style.DialogBackgroundColor;
             ramNumericUpDown.ForeColor = style.DialogFontColor;
+
+            debugCheckBox.BackColor = style.DialogBackgroundColor;
+            debugCheckBox.ForeColor = style.DialogFontColor;
 
             resolutionComboBox.Items.Add(new Size(800, 600));
             resolutionComboBox.Items.Add(new Size(1280, 1024));

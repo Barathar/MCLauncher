@@ -36,6 +36,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.ramNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.resolutionComboBox = new System.Windows.Forms.ComboBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.debugCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.ramNumericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
@@ -47,7 +49,7 @@
             this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.saveButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.saveButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.saveButton.Location = new System.Drawing.Point(291, 213);
+            this.saveButton.Location = new System.Drawing.Point(291, 266);
             this.saveButton.Name = "saveButton";
             this.saveButton.Size = new System.Drawing.Size(127, 37);
             this.saveButton.TabIndex = 1;
@@ -62,7 +64,7 @@
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.cancelButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cancelButton.Location = new System.Drawing.Point(424, 213);
+            this.cancelButton.Location = new System.Drawing.Point(424, 266);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(127, 37);
             this.cancelButton.TabIndex = 2;
@@ -128,6 +130,26 @@
             this.resolutionComboBox.Size = new System.Drawing.Size(431, 26);
             this.resolutionComboBox.TabIndex = 8;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(12, 205);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(67, 18);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Debug:";
+            // 
+            // debugCheckBox
+            // 
+            this.debugCheckBox.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.debugCheckBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.debugCheckBox.Location = new System.Drawing.Point(128, 205);
+            this.debugCheckBox.Name = "debugCheckBox";
+            this.debugCheckBox.Size = new System.Drawing.Size(20, 18);
+            this.debugCheckBox.TabIndex = 10;
+            this.debugCheckBox.UseVisualStyleBackColor = true;
+            // 
             // SettingsDialog
             // 
             this.AcceptButton = this.saveButton;
@@ -135,7 +157,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.CancelButton = this.cancelButton;
-            this.ClientSize = new System.Drawing.Size(563, 262);
+            this.ClientSize = new System.Drawing.Size(563, 315);
+            this.Controls.Add(this.debugCheckBox);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.resolutionComboBox);
             this.Controls.Add(this.ramNumericUpDown);
             this.Controls.Add(this.label3);
@@ -166,5 +190,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.NumericUpDown ramNumericUpDown;
         private System.Windows.Forms.ComboBox resolutionComboBox;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox debugCheckBox;
     }
 }

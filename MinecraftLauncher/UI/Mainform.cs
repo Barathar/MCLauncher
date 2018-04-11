@@ -4,6 +4,7 @@ using MCLauncher.Reader;
 using MCLauncher.UI;
 using MCLauncher.Utility;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
@@ -19,6 +20,8 @@ namespace MinecraftLauncher.UI
         {
             InitializeComponent();
             InitializeImages();
+
+            Console.SetOut(new OutputConsole(this, consoleTextBox));
         }
 
         private void InitializeImages()
@@ -56,14 +59,18 @@ namespace MinecraftLauncher.UI
             settingsDialog.ServerIp = Settings.Default.ServerIp;
             settingsDialog.Resolution = Settings.Default.Resolution;
             settingsDialog.RAM = Settings.Default.RAM;
+            settingsDialog.Debug = Settings.Default.ShowDebugConsole;
 
             if (settingsDialog.ShowDialog() == DialogResult.OK)
             {
                 Settings.Default.ServerIp = settingsDialog.ServerIp;
                 Settings.Default.Resolution = settingsDialog.Resolution;
                 Settings.Default.RAM = settingsDialog.RAM;
-                Settings.Default.Save();
-            }
+                Settings.Default.ShowDebugConsole = settingsDialog.Debug;
+                Settings.Default.Save();                
+
+                consoleTextBox.Visible = Settings.Default.ShowDebugConsole;
+            }            
         }
 
         // Refreshbutton
@@ -141,6 +148,10 @@ namespace MinecraftLauncher.UI
 
             if (!MD5Hash.IsEqual(settingsButton.Image, style.SettingsButtonImage))
                 settingsButton.Image = style.SettingsButtonImage;
+
+            consoleTextBox.BackColor = style.DialogBackgroundColor;
+            consoleTextBox.ForeColor = style.DialogFontColor;            
+            consoleTextBox.Visible = Settings.Default.ShowDebugConsole;
         }
         private void UpdateDialogSize(Style style)
         {
