@@ -11,10 +11,12 @@ namespace MinecraftLauncher
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);                        
-            
+            Application.SetCompatibleTextRenderingDefault(false);
+
+            Mainform form = new Mainform();
             Settings.Default.Load();
-            Application.Run(new Mainform());
+            Paths.Print();
+            Application.Run(form);
         }
     }
 }

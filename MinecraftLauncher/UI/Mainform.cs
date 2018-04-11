@@ -19,7 +19,7 @@ namespace MinecraftLauncher.UI
         public Mainform()
         {
             InitializeComponent();
-            InitializeImages();
+            InitializeImages();            
 
             Console.SetOut(new OutputConsole(this, consoleTextBox));
         }

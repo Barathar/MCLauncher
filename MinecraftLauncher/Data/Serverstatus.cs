@@ -1,8 +1,4 @@
-﻿using MCLauncher.Utility;
-using System;
-using System.Drawing;
-
-namespace MCLauncher.Data
+﻿namespace MCLauncher.Data
 {
     public class Serverstatus
     {

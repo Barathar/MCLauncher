@@ -9,8 +9,7 @@ namespace MCLauncher.Configuration
 {
     public class Settings
     {
-        public readonly string settingsFile = Path.Combine(Paths.LauncherFilesDirectory, "settings.xml");
-        private static Settings instance = null;            
+        private static Settings instance = null;
 
         public static Settings Default
         {
@@ -30,40 +29,43 @@ namespace MCLauncher.Configuration
 
         public void Load()
         {
-            if (!File.Exists(settingsFile))
+            if (!File.Exists(Paths.SettingsFile))
                 return;
 
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
-            FileStream stream = new FileStream(settingsFile, FileMode.Open);
+            FileStream stream = new FileStream(Paths.SettingsFile, FileMode.Open);
             XmlReader reader = XmlReader.Create(stream);
-            instance = (Settings)serializer.Deserialize(reader);            
+            instance = (Settings)serializer.Deserialize(reader);
 
             reader.Close();
             stream.Close();
 
+            instance.Print();
             Console.WriteLine("Settings loaded.");
-            Console.WriteLine($"{nameof(ServerIp)}: {instance.ServerIp}.");
-            Console.WriteLine($"{nameof(Resolution)}: {instance.Resolution.Width} x {instance.Resolution.Height}.");
-            Console.WriteLine($"{nameof(RAM)}: {instance.RAM}.");
         }
         public void Save()
         {
             if (instance == null)
-                return;            
+                return;
 
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
-            FileStream stream = new FileStream(settingsFile, FileMode.Create);
+            FileStream stream = new FileStream(Paths.SettingsFile, FileMode.Create);
             XmlWriter writer = new XmlTextWriter(stream, Encoding.Unicode);
             serializer.Serialize(writer, instance);
             writer.Close();
             stream.Close();
 
+            instance.Print();
             Console.WriteLine("Settings saved.");
-            Console.WriteLine($"{nameof(ServerIp)}: {instance.ServerIp}.");
-            Console.WriteLine($"{nameof(Resolution)}: {instance.Resolution.Width} x {instance.Resolution.Height}.");
-            Console.WriteLine($"{nameof(RAM)}: {instance.RAM}.");
+        }
+        public void Print()
+        {
+            foreach (var prop in typeof(Settings).GetProperties())
+            {
+                Console.WriteLine("{0}: {1}", prop.Name, prop.GetValue(this, null));
+            }
         }
     }
 }

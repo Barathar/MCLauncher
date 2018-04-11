@@ -26,7 +26,6 @@ namespace MCLauncher.Utility
             }
             textBox.AppendText(value.ToString());
         }
-
         public override Encoding Encoding
         {
             get { return System.Text.Encoding.UTF8; }

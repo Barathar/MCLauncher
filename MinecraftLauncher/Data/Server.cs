@@ -14,7 +14,7 @@ namespace MCLauncher.Data
         public Uri PatchNotesUri { get; set; }
         public Uri PatchFilesUri { get; set; }
         public LauncherProfileData LauncherProfileData { get; set; }
-        public Image Image { get; set; } = Properties.Resources.filenotfound;
-        public Image GrayScaledImage { get; set; } = Properties.Resources.filenotfound;
+        public Image Image { get; set; } = Properties.Resources._default;
+        public Image GrayScaledImage { get; set; } = Properties.Resources._default;
     }
 }

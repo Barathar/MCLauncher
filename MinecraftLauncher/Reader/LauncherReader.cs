@@ -1,7 +1,6 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -16,7 +15,7 @@ namespace MCLauncher.Reader
             result.Server = new ServerReader().Read(document);
             result.Style = new StyleReader().Read(document);
 
-            //TODO put in custom class            
+            //TODO put in custom class
             result.LauncherFile = Path.Combine(Paths.CurrentDirectory, document.XPathSelectElement("root/launcher/launcherExecutable/relPath").Value);
             result.DefaultLauncherProfiles = new Uri(document.XPathSelectElement("root/launcher/launcherProfilesJson/url").Value);
             result.LauncherProfilesPath = document.XPathSelectElement("root/launcher/launcherProfilesJson/relPath").Value;

@@ -9,7 +9,7 @@ namespace MCLauncher.Reader
     public class PatchReader
     {
         public List<PatchFile> ReadPatchFiles(XDocument document)
-        {           
+        {
             XElement files = document.XPathSelectElement("root/files");
 
             List<PatchFile> result = new List<PatchFile>();
@@ -37,30 +37,13 @@ namespace MCLauncher.Reader
         {
             PatchFile result = new PatchFile();
 
-            result.Filename = ReadFilename(item);
-            result.DownloadUri = ReadDownloadUri(item);
-            result.LocalDirectory = ReadLocalDirectory(item);
-            result.Hash = ReadHash(item);
+            result.Filename = ReadString(item, "name");
+            result.DownloadUri = ReadUri(item, "url");
+            result.LocalDirectory = ReadString(item, "relPath");
+            result.Hash = ReadString(item, "hash");
 
             return result;
         }
-        private string ReadFilename(XElement item)
-        {
-            return item.XPathSelectElement("name").Value;
-        }
-        private Uri ReadDownloadUri(XElement item)
-        {
-            return new Uri(item.XPathSelectElement("url").Value);
-        }
-        private string ReadLocalDirectory(XElement item)
-        {
-            return item.XPathSelectElement("relPath").Value;
-        }
-        private string ReadHash(XElement item)
-        {
-            return item.XPathSelectElement("hash").Value;
-        }
-
         private CleanupDirectory ReadCleanupDirectory(XElement item)
         {
             CleanupDirectory result = new CleanupDirectory();
@@ -68,6 +51,15 @@ namespace MCLauncher.Reader
             result.LocalDirectory = item.Value;
 
             return result;
+        }
+
+        private string ReadString(XElement item, string itemName)
+        {
+            return item.XPathSelectElement(itemName).Value;
+        }
+        private Uri ReadUri(XElement item, string itemName)
+        {
+            return new Uri(item.XPathSelectElement(itemName).Value);
         }
     }
 }
