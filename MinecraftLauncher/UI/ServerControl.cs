@@ -29,7 +29,7 @@ namespace MCLauncher.UI
         private Patcher patcher = new Patcher();
         private Cleaner cleaner = new Cleaner();
         private Timer statusUpdateTimer = new Timer();
-        
+
         public bool IsBusy { get { return downloadThread.IsBusy; } }
 
         private string InstallationDirectory { get { return Path.Combine(Paths.CurrentDirectory, server.Version); } }
@@ -108,8 +108,7 @@ namespace MCLauncher.UI
         }
         private void OnUninstallButtonClicked(object sender, EventArgs e)
         {
-            ConfirmDialog dlg = new ConfirmDialog();
-            dlg.DisplayText = $"Uninstall '{server.Name} ({server.Version})'?";
+            ConfirmDialog dlg = new ConfirmDialog(style, $"Uninstall '{server.Name} ({server.Version})'?");
             if (dlg.ShowDialog() == DialogResult.OK)
                 new Uninstaller().Uninstall(InstallationDirectory);
 
@@ -117,7 +116,7 @@ namespace MCLauncher.UI
         }
         private void OnPatchNotesButtonClicked(object sender, EventArgs e)
         {
-            PatchNotes dlg = new PatchNotes(server.PatchNotesUri);
+            PatchNotes dlg = new PatchNotes(style, server.PatchNotesUri);
             dlg.ShowDialog();
         }
 
@@ -147,6 +146,7 @@ namespace MCLauncher.UI
             else
             {
                 PatchLauncherProfile();
+                CopyServersFile();
                 LaunchMinecraft();
             }
         }
@@ -238,6 +238,23 @@ namespace MCLauncher.UI
         {
             LauncherProfilePatcher patcher = new LauncherProfilePatcher(defaultLauncherProfile);
             patcher.Patch(Path.Combine(Paths.CurrentDirectory, launcherProfilesPath), server.LauncherProfileData);
+        }
+        private void CopyServersFile()
+        {
+            string source = Path.Combine(Paths.CurrentDirectory, server.Version, "Servers.dat");
+            string destination = Path.Combine(Paths.CurrentDirectory, ".minecraft", "Servers.dat");
+
+            if (File.Exists(destination))
+            {
+                File.Delete(destination);
+                Console.WriteLine($"Deleting {destination}");
+            }
+
+            if (File.Exists(source))
+            {
+                File.Copy(source, destination);
+                Console.WriteLine($"Copying {source}");
+            }
         }
         private void LaunchMinecraft()
         {

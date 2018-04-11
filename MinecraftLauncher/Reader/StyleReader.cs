@@ -23,11 +23,13 @@ namespace MCLauncher.Reader
         {
             Style result = new Style();
 
-            result.LauncherTitle = ReadTitle(style);
-            result.LauncherVersion = ReadVersion(style);
-            result.LauncherWidth = ReadWidth(style);
-            result.LauncherHeight = ReadHeight(style);
-            result.FontColor = ReadFontColor(style);
+            result.LauncherTitle = ReadString(style, "name");
+            result.LauncherVersion = ReadString(style, "version");
+            result.LauncherWidth = ReadNumber(style, "width");
+            result.LauncherHeight = ReadNumber(style, "height");
+            result.FontColor = ReadColor(style, "fontColor");
+            result.DialogBackgroundColor = ReadColor(style, "dialogBackgroundColor");
+            result.DialogFontColor = ReadColor(style, "dialogFontColor");
 
             XElement images = style.XPathSelectElement("images");
 
@@ -46,27 +48,18 @@ namespace MCLauncher.Reader
             return result;
         }
 
-        private string ReadTitle(XElement style)
+        private string ReadString(XElement style, string itemName)
         {
-            return style.XPathSelectElement("name").Value;
+            return style.XPathSelectElement(itemName).Value;
         }
-        private string ReadVersion(XElement style)
+        private int ReadNumber(XElement style, string itemName)
         {
-            return style.XPathSelectElement("version").Value;
-        }
-        private int ReadWidth(XElement style)
-        {
-            return Convert.ToInt32(style.XPathSelectElement("width").Value);
+            return Convert.ToInt32(style.XPathSelectElement(itemName).Value);
 
         }
-        private int ReadHeight(XElement style)
+        private Color ReadColor(XElement style, string itemName)
         {
-            return Convert.ToInt32(style.XPathSelectElement("height").Value);
-
-        }
-        private Color ReadFontColor(XElement style)
-        {
-            string colorString = style.XPathSelectElement("fontColor").Value;
+            string colorString = style.XPathSelectElement(itemName).Value;
             return ColorTranslator.FromHtml(colorString);
         }
         private Image ReadImage(XElement images, string itemName)

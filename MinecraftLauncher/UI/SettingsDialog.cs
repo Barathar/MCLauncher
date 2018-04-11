@@ -1,13 +1,6 @@
-﻿using MCLauncher.Configuration;
+﻿using MCLauncher.Data;
 using MCLauncher.Utility;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MCLauncher.UI
@@ -21,7 +14,7 @@ namespace MCLauncher.UI
                 return serverIpTextBox.Text;
             }
 
-            private set
+            set
             {
                 serverIpTextBox.Text = value;
             }
@@ -43,33 +36,49 @@ namespace MCLauncher.UI
             {
                 return (int)ramNumericUpDown.Value;
             }
-            private set
+            set
             {
                 ramNumericUpDown.Value = value;
             }
         }
 
-        public SettingsDialog(string serverIp, Size resolution, int ram)
+        public SettingsDialog(Style style)
         {
             InitializeComponent();
 
+            BackColor = style.DialogBackgroundColor;
+
             saveButton.Font = new Font(FontLoader.MinecraftFont.Families[0], saveButton.Font.Size);
-            cancelButton.Font = new Font(FontLoader.MinecraftFont.Families[0], cancelButton.Font.Size); 
+            cancelButton.Font = new Font(FontLoader.MinecraftFont.Families[0], cancelButton.Font.Size);
 
             label1.Font = new Font(FontLoader.MinecraftFont.Families[0], label1.Font.Size);
+            label1.BackColor = style.DialogBackgroundColor;
+            label1.ForeColor = style.DialogFontColor;
+
             label2.Font = new Font(FontLoader.MinecraftFont.Families[0], label2.Font.Size);
+            label2.BackColor = style.DialogBackgroundColor;
+            label2.ForeColor = style.DialogFontColor;
+
             label3.Font = new Font(FontLoader.MinecraftFont.Families[0], label3.Font.Size);
+            label3.BackColor = style.DialogBackgroundColor;
+            label3.ForeColor = style.DialogFontColor;
 
             serverIpTextBox.Font = new Font(FontLoader.MinecraftFont.Families[0], serverIpTextBox.Font.Size);
+            serverIpTextBox.BackColor = style.DialogBackgroundColor;
+            serverIpTextBox.ForeColor = style.DialogFontColor;
+
             resolutionComboBox.Font = new Font(FontLoader.MinecraftFont.Families[0], resolutionComboBox.Font.Size);
+            resolutionComboBox.BackColor = style.DialogBackgroundColor;
+            resolutionComboBox.ForeColor = style.DialogFontColor;
+
             ramNumericUpDown.Font = new Font(FontLoader.MinecraftFont.Families[0], ramNumericUpDown.Font.Size);
+            ramNumericUpDown.BackColor = style.DialogBackgroundColor;
+            ramNumericUpDown.ForeColor = style.DialogFontColor;
 
             resolutionComboBox.Items.Add(new Size(800, 600));
             resolutionComboBox.Items.Add(new Size(1280, 1024));
-
-            ServerIp = serverIp;
-            Resolution = resolution;
-            RAM = ram;
+            resolutionComboBox.Items.Add(new Size(1600, 900));
+            resolutionComboBox.Items.Add(new Size(1920, 1080));
         }
     }
 }

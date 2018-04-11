@@ -23,6 +23,8 @@ namespace MCLauncher.Data
         public Image ServerUpdateButtonImage { get; set; } = Properties.Resources.update;
         public Image ServerPatchNotesButtonImage { get; set; } = Properties.Resources.changes;
 
-        public Color FontColor { get; set; } = Color.Black;        
+        public Color FontColor { get; set; } = Color.Black;
+        public Color DialogBackgroundColor { get; set; } = Color.Green;
+        public Color DialogFontColor { get; set; } = Color.White;
     }
 }

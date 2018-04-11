@@ -13,6 +13,8 @@ namespace MinecraftLauncher.UI
 {
     public partial class Mainform : Form
     {
+        private SettingsDialog settingsDialog;
+
         public Mainform()
         {
             InitializeComponent();
@@ -51,12 +53,15 @@ namespace MinecraftLauncher.UI
         // Settingsbutton
         private void ShowSettingsDialog()
         {
-            SettingsDialog dlg = new SettingsDialog(Settings.Default.ServerIp, Settings.Default.Resolution, Settings.Default.RAM);
-            if (dlg.ShowDialog() == DialogResult.OK)
+            settingsDialog.ServerIp = Settings.Default.ServerIp;
+            settingsDialog.Resolution = Settings.Default.Resolution;
+            settingsDialog.RAM = Settings.Default.RAM;
+
+            if (settingsDialog.ShowDialog() == DialogResult.OK)
             {
-                Settings.Default.ServerIp = dlg.ServerIp;
-                Settings.Default.Resolution = dlg.Resolution;
-                Settings.Default.RAM = dlg.RAM;
+                Settings.Default.ServerIp = settingsDialog.ServerIp;
+                Settings.Default.Resolution = settingsDialog.Resolution;
+                Settings.Default.RAM = settingsDialog.RAM;
                 Settings.Default.Save();
             }
         }
@@ -93,10 +98,11 @@ namespace MinecraftLauncher.UI
             UpdateTitle(launcher.Style);
             UpdateDialogAppearance(launcher.Style);
             UpdateDialogSize(launcher.Style);
+            UpdateSettingsDialog(launcher.Style);
         }
         private void UpdateServerList(Launcher launcher)
         {
-            for(int index = serverPanel.Controls.Count -1; index >= 0; index--)
+            for (int index = serverPanel.Controls.Count - 1; index >= 0; index--)
             {
                 if (launcher.Server.Any(e => e.Version == serverPanel.Controls[index].Name))
                     continue;
@@ -142,6 +148,10 @@ namespace MinecraftLauncher.UI
             Height = style.LauncherHeight;
             serverPanel.Width = style.ServerWidth;
             overlay.Width = style.ServerWidth + 20;
+        }
+        private void UpdateSettingsDialog(Style style)
+        {
+            settingsDialog = new SettingsDialog(style);
         }
 
         private void DownloadLauncherFromWeb()
