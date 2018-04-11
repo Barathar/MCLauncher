@@ -55,6 +55,7 @@
             this.serverPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.serverPanel.BackColor = System.Drawing.Color.Transparent;
+            this.serverPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.serverPanel.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.serverPanel.Location = new System.Drawing.Point(54, 37);
             this.serverPanel.Name = "serverPanel";

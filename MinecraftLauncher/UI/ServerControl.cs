@@ -29,7 +29,7 @@ namespace MCLauncher.UI
         private Patcher patcher = new Patcher();
         private Cleaner cleaner = new Cleaner();
         private Timer statusUpdateTimer = new Timer();
-
+        
         public bool IsBusy { get { return downloadThread.IsBusy; } }
 
         private string InstallationDirectory { get { return Path.Combine(Paths.CurrentDirectory, server.Version); } }
@@ -60,7 +60,7 @@ namespace MCLauncher.UI
         }
         private void OnTimerTick(Object sender, EventArgs eventArgs)
         {
-            DownloadServerstatus();            
+            DownloadServerstatus();
         }
 
         private void OnDoWork(object sender, DoWorkEventArgs e)
@@ -85,7 +85,7 @@ namespace MCLauncher.UI
                 return;
 
             XDocument document = XDocument.Parse(e.Result, LoadOptions.None);
-            UpdateHelper(document);            
+            UpdateHelper(document);
             UpdateControls();
         }
         private void OnDownloadServerstatusCompleted(object sender, DownloadStringCompletedEventArgs e)
@@ -178,8 +178,8 @@ namespace MCLauncher.UI
             cleaner.CleanupDirectories = cleanupDirectories;
         }
         private void UpdateStatusControls(Serverstatus status)
-        {            
-            serverStatus.Image = status.Online? style.ServerOnlineImage : style.ServerOfflineImage;
+        {
+            serverStatus.Image = status.Online ? style.ServerOnlineImage : style.ServerOfflineImage;
 
             motdLabel.Visible = status.Online;
             motdLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], motdLabel.Font.Size);
@@ -203,20 +203,20 @@ namespace MCLauncher.UI
             versionLabel.ForeColor = style.FontColor;
             versionLabel.Text = $"{server.Version} ({server.State})";
 
-            ipLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], ipLabel.Font.Size);                       
+            ipLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], ipLabel.Font.Size);
             ipLabel.ForeColor = style.FontColor;
             ipLabel.Text = server.Ip;
 
             progressBar.Value = 0;
             progressBar.Visible = !InstallationDirectoryExists || patcher.UpdateNeeded;
-            
+
             button.Image = GetButtonImage();
 
             uninstallButton.Image = style.ServerUninstallButtonImage;
             uninstallButton.Visible = InstallationDirectoryExists;
 
             patchNotesButton.Image = style.ServerPatchNotesButtonImage;
-            
+
             Visible = true;
         }
 
