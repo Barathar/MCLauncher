@@ -12,7 +12,7 @@ namespace MinecraftLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Console.WriteLine("Starting with foo...");
+            
             //Console.SetOut(writer);
             Settings.Default.Load();
             Application.Run(new Mainform());
