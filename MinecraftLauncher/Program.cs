@@ -12,6 +12,7 @@ namespace MinecraftLauncher
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            // Removed foo ...
             
             //Console.SetOut(writer);
             Settings.Default.Load();
