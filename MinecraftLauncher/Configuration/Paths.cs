@@ -21,6 +21,6 @@ namespace MCLauncher.Configuration
         }
         public static string SettingsFile { get { return Path.Combine(LauncherFilesDirectory, "settings.xml"); } }        
         public static string MinecraftFont { get { return Path.Combine(LauncherFilesDirectory, "Minecraft.ttf"); } }
-        public static string JsonAssembly { get { return Path.Combine(LauncherFilesDirectory, "Newtonsoft.Json.dll"); } }
+        public static string JsonAssembly { get { return Path.Combine(CurrentDirectory, "Newtonsoft.Json.dll"); } }
     }
 }
