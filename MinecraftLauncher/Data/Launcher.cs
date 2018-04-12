@@ -6,12 +6,10 @@ namespace MCLauncher.Data
 {
     public class Launcher
     {        
+        public Uri DefaultProfiles { get; set; }
+        public string ProfilesPath { get; set; }
+        public string Executable { get; set; } = Paths.DefaultLauncherExecutable;
         public List<Server> Server { get; set; }
         public Style Style { get; set; }
-
-        //TODO put in custom class
-        public Uri DefaultLauncherProfiles { get; set; }
-        public string LauncherProfilesPath { get; set; }
-        public string LauncherFile { get; set; } = Paths.DefaultLauncherFile;
     }
 }

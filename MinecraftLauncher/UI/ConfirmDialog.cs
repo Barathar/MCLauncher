@@ -1,5 +1,5 @@
 ﻿using MCLauncher.Data;
-using MCLauncher.Utility;
+using MCLauncher.Fonts;
 using System.Drawing;
 using System.Windows.Forms;
 

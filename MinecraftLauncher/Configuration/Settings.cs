@@ -1,4 +1,4 @@
-﻿using System;
+﻿using MCLauncher.Utility;
 using System.Drawing;
 using System.IO;
 using System.Text;
@@ -26,6 +26,8 @@ namespace MCLauncher.Configuration
         public Size Resolution { get; set; } = new Size(800, 600);
         public int RAM { get; set; } = 4;
         public bool ShowDebugConsole { get; set; } = false;
+        public bool DebugVerbose { get; set; } = true;
+        public int VerboseLevel { get; set; } = 1;
 
         public void Load()
         {
@@ -41,8 +43,8 @@ namespace MCLauncher.Configuration
             reader.Close();
             stream.Close();
 
-            instance.Print();
-            Console.WriteLine("Settings loaded.");
+            OutputConsole.Print(instance);
+            OutputConsole.Print("[Settings loaded]");
         }
         public void Save()
         {
@@ -57,15 +59,8 @@ namespace MCLauncher.Configuration
             writer.Close();
             stream.Close();
 
-            instance.Print();
-            Console.WriteLine("Settings saved.");
-        }
-        public void Print()
-        {
-            foreach (var prop in typeof(Settings).GetProperties())
-            {
-                Console.WriteLine("{0}: {1}", prop.Name, prop.GetValue(this, null));
-            }
+            OutputConsole.Print(instance);
+            OutputConsole.Print("[Settings saved]");
         }
     }
 }

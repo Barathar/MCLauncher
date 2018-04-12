@@ -1,4 +1,5 @@
 ﻿using MCLauncher.Data;
+using MCLauncher.Fonts;
 using MCLauncher.Utility;
 using System;
 using System.Drawing;

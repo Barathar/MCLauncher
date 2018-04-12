@@ -31,19 +31,11 @@ namespace MCLauncher.Configuration
                 return Path.Combine(LauncherFilesDirectory, "settings.xml");
             }
         }
-        public static string DefaultLauncherFile
+        public static string DefaultLauncherExecutable
         {
             get
             {
                 return Path.Combine(Paths.CurrentDirectory, "MinecraftLauncher.exe");
-            }
-        }
-
-        public static void Print()
-        {
-            foreach (var prop in typeof(Paths).GetProperties())
-            {
-                Console.WriteLine("{0}: {1}", prop.Name, prop.GetValue(typeof(Paths), null));
             }
         }
     }

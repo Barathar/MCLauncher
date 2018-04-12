@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
 
-namespace MCLauncher.Utility
+namespace MCLauncher.Images
 {
     public static class ImageManipulation
     {

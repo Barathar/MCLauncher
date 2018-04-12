@@ -43,14 +43,15 @@ namespace MCLauncher.Reader
             result.LocalDirectory = XElementExtender.ReadString(item, "relPath");
             result.Hash = XElementExtender.ReadString(item, "hash");
 
+            OutputConsole.PrintVerbose(result, 3);
             return result;
         }
         private CleanupDirectory ReadCleanupDirectory(XElement item)
         {
             CleanupDirectory result = new CleanupDirectory();
-
             result.LocalDirectory = item.Value;
 
+            OutputConsole.PrintVerbose(result, 3);
             return result;
         }
     }

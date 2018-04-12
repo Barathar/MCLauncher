@@ -1,5 +1,7 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
+using MCLauncher.Fonts;
+using MCLauncher.Images;
 using MCLauncher.Reader;
 using MCLauncher.Update;
 using MCLauncher.Utility;
@@ -109,16 +111,20 @@ namespace MCLauncher.UI
         }
         private void OnUninstallButtonClicked(object sender, EventArgs e)
         {
+            statusUpdateTimer.Stop();
             ConfirmDialog dlg = new ConfirmDialog(style, $"Uninstall '{server.Name} ({server.Version})'?");
             if (dlg.ShowDialog() == DialogResult.OK)
                 new Uninstaller().Uninstall(InstallationDirectory);
 
             UpdateControls();
+            statusUpdateTimer.Start();
         }
         private void OnPatchNotesButtonClicked(object sender, EventArgs e)
         {
+            statusUpdateTimer.Stop();
             PatchNotes dlg = new PatchNotes(style, server.PatchNotesUri);
             dlg.ShowDialog();
+            statusUpdateTimer.Start();
         }
 
         private void InitializeTimer()
@@ -139,6 +145,7 @@ namespace MCLauncher.UI
 
         private void HandleMainButtonClick()
         {
+            statusUpdateTimer.Stop();
             if (patcher.UpdateNeeded)
             {
                 Patch();
@@ -150,6 +157,7 @@ namespace MCLauncher.UI
                 CopyServersFile();
                 LaunchMinecraft();
             }
+            statusUpdateTimer.Start();
         }
         private void DownloadPatchFileInfo()
         {

@@ -22,6 +22,8 @@ namespace MinecraftLauncher.UI
             InitializeImages();            
 
             Console.SetOut(new OutputConsole(this, consoleTextBox));
+            OutputConsole.Print(typeof(Paths));
+            Settings.Default.Load();            
         }
 
         private void InitializeImages()
@@ -125,7 +127,7 @@ namespace MinecraftLauncher.UI
                 Control[] current = serverPanel.Controls.Find(server.Version, false);
                 if (current.Length <= 0)
                 {
-                    ServerControl control = new ServerControl(server, launcher.Style, launcher.DefaultLauncherProfiles, launcher.LauncherProfilesPath, launcher.LauncherFile);
+                    ServerControl control = new ServerControl(server, launcher.Style, launcher.DefaultProfiles, launcher.ProfilesPath, launcher.Executable);
                     control.Name = server.Version;
                     serverPanel.Controls.Add(control);
                 }

@@ -39,6 +39,7 @@ namespace MCLauncher.Reader
             result.RefreshButtonImage = XElementExtender.ReadImage(images, "buttonRefresh") ?? result.RefreshButtonImage;
             result.ServerPatchNotesButtonImage = XElementExtender.ReadImage(images, "buttonPatchnotes") ?? result.ServerPatchNotesButtonImage;
 
+            OutputConsole.PrintVerbose(result, 3);
             return result;
         }        
     }

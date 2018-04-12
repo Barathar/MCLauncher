@@ -1,5 +1,5 @@
 ﻿using MCLauncher.Configuration;
-using System;
+using MCLauncher.Utility;
 using System.IO;
 
 namespace MCLauncher.Update
@@ -13,8 +13,8 @@ namespace MCLauncher.Update
 
             if (!IsValidSubDirectory(directory))
                 return;
-
-            Console.WriteLine($"Uninstalling '{directory}'.");
+            
+            OutputConsole.Print($"[Uninstalling] {directory}");
             Directory.Delete(directory, true);
         }
 

@@ -1,4 +1,5 @@
 ﻿using MCLauncher.Data;
+using MCLauncher.Images;
 using MCLauncher.Utility;
 using System.Collections.Generic;
 using System.Drawing;
@@ -40,6 +41,7 @@ namespace MCLauncher.Reader
             result.Image = XElementExtender.ReadImage(images, "background") ?? result.Image;
             result.GrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.Image as Bitmap);
 
+            OutputConsole.PrintVerbose(result, 1);
             return result;
         }
         private LauncherProfileData ReadLauncherProfileData(XElement launcherProfile)
@@ -52,6 +54,7 @@ namespace MCLauncher.Reader
             result.JavaArgs = XElementExtender.ReadString(launcherProfile, "javaArgs");
             result.GameDirectory = XElementExtender.ReadString(launcherProfile, "gameDir");
 
+            OutputConsole.PrintVerbose(result, 1);
             return result;
         }
     }

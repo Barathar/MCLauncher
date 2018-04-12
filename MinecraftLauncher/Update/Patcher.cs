@@ -1,10 +1,8 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
 using MCLauncher.Utility;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace MCLauncher.Update
 {
@@ -14,7 +12,7 @@ namespace MCLauncher.Update
         public event UpdateProgressDelegate UpdateProgress;
 
         public List<PatchFile> PatchFiles { get; set; } = new List<PatchFile>();
-        
+
         public bool UpdateNeeded { get { return GetUpdateableFiles().Count > 0; } }
 
         public void Patch()
@@ -25,12 +23,11 @@ namespace MCLauncher.Update
             foreach (var file in updateableFiles)
             {
                 UpdateProgress?.Invoke((100 * index / updateableFiles.Count));
-                Console.WriteLine($"Updating [{index}/{updateableFiles.Count}] '{file.LocalDirectory}'.");
+                OutputConsole.Print($"[Updating] [{index}/{updateableFiles.Count}] {file.LocalDirectory}");
                 Downloader.Download(file.DownloadUri, Path.Combine(Paths.CurrentDirectory, file.LocalDirectory));
                 index++;
             }
-
-            Console.WriteLine($"Updating done.");
+            OutputConsole.Print($"[Updating done]");
         }
 
         private List<PatchFile> GetUpdateableFiles()

@@ -1,8 +1,9 @@
 ﻿using MCLauncher.Configuration;
+using System;
 using System.Drawing.Text;
 using System.IO;
 
-namespace MCLauncher.Utility
+namespace MCLauncher.Fonts
 {
     public static class FontLoader
     {
@@ -22,6 +23,8 @@ namespace MCLauncher.Utility
 
         private static void Load()
         {
+            Console.WriteLine($"[Loading font] {minecraftFontFile}");
+
             if (!File.Exists(minecraftFontFile))
                 File.WriteAllBytes(minecraftFontFile, Properties.Resources.Minecraft);
 

@@ -1,6 +1,6 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
-using System;
+using MCLauncher.Utility;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,11 +29,11 @@ namespace MCLauncher.Update
                     if (PatchFiles.Any(e => relativePath.Contains(e.LocalDirectory)))
                         continue;
 
-                    Console.WriteLine($"Cleaning '{file}'.");
+                    OutputConsole.Print($"[Cleaning] {file}");
                     File.Delete(file);
                 }
             }
-            Console.WriteLine($"Cleaning done.");
+            OutputConsole.Print($"[Cleaning done]");            
         }
 
         private bool IsValidSubDirectory(string filename)
