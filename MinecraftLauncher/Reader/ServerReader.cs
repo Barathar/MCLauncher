@@ -2,6 +2,7 @@
 using MCLauncher.Images;
 using MCLauncher.Utility;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -36,10 +37,11 @@ namespace MCLauncher.Reader
                 StatusUri = XElementExtender.ReadUri(server, "status"),
                 PatchNotesUri = XElementExtender.ReadUri(server, "patchnotesUrl"),
                 PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl"),
-                Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,
-                GrayScaledImage = ImageManipulation.CreateGrayScaledImage(Properties.Resources.filenotfound),
+                Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,                
                 LauncherProfileData = ReadLauncherProfileData(launcherProfile)
             };
+
+            result.GrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.Image as Bitmap);
 
             OutputConsole.PrintVerbose(result, 1);
             return result;
