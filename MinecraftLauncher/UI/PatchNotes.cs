@@ -1,6 +1,6 @@
 ﻿using MCLauncher.Data;
 using MCLauncher.Fonts;
-using MCLauncher.Utility;
+using MCLauncher.Web;
 using System;
 using System.Drawing;
 using System.Windows.Forms;

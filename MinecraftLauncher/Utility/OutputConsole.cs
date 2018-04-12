@@ -76,5 +76,22 @@ namespace MCLauncher.Utility
                 Console.WriteLine("{0}: {1}", prop.Name, prop.GetValue(obj, null));
             }
         }
+        public static void PrintVerbose(Exception e, int level)
+        {
+            PrintVerbose(e, string.Empty, level);
+        }
+        public static void PrintVerbose(Exception e, string message, int level)
+        {
+            if (Settings.Default.DebugVerbose && level <= Settings.Default.VerboseLevel)
+            {
+                OutputConsole.Print("################### EXCEPTION ##############");
+                if (message != null)
+                {
+                    OutputConsole.Print(message);
+                }
+                OutputConsole.Print(e);
+                OutputConsole.Print("############################################");
+            }
+        }
     }
 }

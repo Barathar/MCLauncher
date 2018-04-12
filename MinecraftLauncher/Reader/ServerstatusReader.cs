@@ -11,12 +11,14 @@ namespace MCLauncher.Reader
         {
             XElement root = document.XPathSelectElement("root");
 
-            Serverstatus result = new Serverstatus();
-            result.Online = XElementExtender.ReadBoolean(root, "online");
-            result.MessageOfTheDay = XElementExtender.ReadString(root, "motd");
-            result.MaxPlayers = XElementExtender.ReadInteger(root, "playerMax");
-            result.CurrentPlayers = XElementExtender.ReadInteger(root, "playerOnline");
-            result.Players = new PlayerReader().Read(document);
+            Serverstatus result = new Serverstatus
+            {
+                Online = XElementExtender.ReadBoolean(root, "online"),
+                MessageOfTheDay = XElementExtender.ReadString(root, "motd"),
+                MaxPlayers = XElementExtender.ReadInteger(root, "playerMax"),
+                CurrentPlayers = XElementExtender.ReadInteger(root, "playerOnline"),
+                Players = new PlayerReader().Read(document)
+            };
 
             OutputConsole.PrintVerbose(result, 2);
             return result;

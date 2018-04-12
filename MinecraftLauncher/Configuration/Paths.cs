@@ -1,18 +1,13 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace MCLauncher.Configuration
 {
     public static class Paths
     {
-        public static string CurrentDirectory
-        {
-            get
-            {
-                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            }
-        }
+        public static string CurrentDirectory { get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); } }
+        public static string DefaultLauncherExecutable { get { return Path.Combine(CurrentDirectory, "MinecraftLauncher.exe"); } }
+
         public static string LauncherFilesDirectory
         {
             get
@@ -24,19 +19,7 @@ namespace MCLauncher.Configuration
                 return result;
             }
         }
-        public static string SettingsFile
-        {
-            get
-            {
-                return Path.Combine(LauncherFilesDirectory, "settings.xml");
-            }
-        }
-        public static string DefaultLauncherExecutable
-        {
-            get
-            {
-                return Path.Combine(Paths.CurrentDirectory, "MinecraftLauncher.exe");
-            }
-        }
+        public static string SettingsFile { get { return Path.Combine(LauncherFilesDirectory, "settings.xml"); } }        
+        public static string MinecraftFont { get { return Path.Combine(LauncherFilesDirectory, "Minecraft.ttf"); } }
     }
 }

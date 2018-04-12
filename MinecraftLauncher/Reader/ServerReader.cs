@@ -2,7 +2,6 @@
 using MCLauncher.Images;
 using MCLauncher.Utility;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -25,34 +24,37 @@ namespace MCLauncher.Reader
 
         private Server ReadServer(XElement server)
         {
-            Server result = new Server();
-            result.Name = XElementExtender.ReadString(server, "name");
-            result.Version = XElementExtender.ReadString(server, "version");
-            result.Ip = XElementExtender.ReadString(server, "server/url");
-            result.State = XElementExtender.ReadString(server, "state");
-            result.StatusUri = XElementExtender.ReadUri(server, "status");
-            result.PatchNotesUri = XElementExtender.ReadUri(server, "patchnotesUrl");
-            result.PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl");
-
-            XElement launcherProfile = server.XPathSelectElement("launcherProfile");
-            result.LauncherProfileData = ReadLauncherProfileData(launcherProfile);
-
             XElement images = server.XPathSelectElement("style/images");
-            result.Image = XElementExtender.ReadImage(images, "background") ?? result.Image;
-            result.GrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.Image as Bitmap);
+            XElement launcherProfile = server.XPathSelectElement("launcherProfile");
+
+            Server result = new Server
+            {
+                Name = XElementExtender.ReadString(server, "name"),
+                Version = XElementExtender.ReadString(server, "version"),
+                Ip = XElementExtender.ReadString(server, "server/url"),
+                State = XElementExtender.ReadString(server, "state"),
+                StatusUri = XElementExtender.ReadUri(server, "status"),
+                PatchNotesUri = XElementExtender.ReadUri(server, "patchnotesUrl"),
+                PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl"),
+                Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,
+                GrayScaledImage = ImageManipulation.CreateGrayScaledImage(Properties.Resources.filenotfound),
+                LauncherProfileData = ReadLauncherProfileData(launcherProfile)
+            };
 
             OutputConsole.PrintVerbose(result, 1);
             return result;
         }
         private LauncherProfileData ReadLauncherProfileData(XElement launcherProfile)
         {
-            LauncherProfileData result = new LauncherProfileData();
-            result.Name = XElementExtender.ReadString(launcherProfile, "name");
-            result.Type = XElementExtender.ReadString(launcherProfile, "type");
-            result.Icon = XElementExtender.ReadString(launcherProfile, "icon");
-            result.LastVersionId = XElementExtender.ReadString(launcherProfile, "lastVersionId");
-            result.JavaArgs = XElementExtender.ReadString(launcherProfile, "javaArgs");
-            result.GameDirectory = XElementExtender.ReadString(launcherProfile, "gameDir");
+            LauncherProfileData result = new LauncherProfileData
+            {
+                Name = XElementExtender.ReadString(launcherProfile, "name"),
+                Type = XElementExtender.ReadString(launcherProfile, "type"),
+                Icon = XElementExtender.ReadString(launcherProfile, "icon"),
+                LastVersionId = XElementExtender.ReadString(launcherProfile, "lastVersionId"),
+                JavaArgs = XElementExtender.ReadString(launcherProfile, "javaArgs"),
+                GameDirectory = XElementExtender.ReadString(launcherProfile, "gameDir")
+            };
 
             OutputConsole.PrintVerbose(result, 1);
             return result;

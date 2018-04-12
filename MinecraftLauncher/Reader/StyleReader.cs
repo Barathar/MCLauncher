@@ -15,32 +15,32 @@ namespace MCLauncher.Reader
 
         private Style ReadStyle(XElement style)
         {
-            Style result = new Style();
-
-            result.LauncherTitle = XElementExtender.ReadString(style, "name");
-            result.LauncherVersion = XElementExtender.ReadString(style, "version");
-            result.LauncherWidth = XElementExtender.ReadInteger(style, "width");
-            result.LauncherHeight = XElementExtender.ReadInteger(style, "height");
-            result.FontColor = XElementExtender.ReadColor(style, "fontColor");
-            result.DialogBackgroundColor = XElementExtender.ReadColor(style, "dialogBackgroundColor");
-            result.DialogFontColor = XElementExtender.ReadColor(style, "dialogFontColor");
-
             XElement images = style.XPathSelectElement("images");
 
-            result.LauncherBackgroundImage = XElementExtender.ReadImage(images, "background") ?? result.LauncherBackgroundImage;
-            result.LauncherOverlayImage = XElementExtender.ReadImage(style, "overlay") ?? result.LauncherOverlayImage;
-            result.ServerOnlineImage = XElementExtender.ReadImage(images, "serverOnline") ?? result.ServerOnlineImage;
-            result.ServerOfflineImage = XElementExtender.ReadImage(images, "serverOffline") ?? result.ServerOfflineImage;
-            result.ServerPlayButtonImage = XElementExtender.ReadImage(images, "buttonPlay") ?? result.ServerPlayButtonImage;
-            result.ServerInstallButtonImage = XElementExtender.ReadImage(images, "buttonInstall") ?? result.ServerInstallButtonImage;
-            result.ServerUninstallButtonImage = XElementExtender.ReadImage(images, "buttonUninstall") ?? result.ServerUninstallButtonImage;
-            result.ServerUpdateButtonImage = XElementExtender.ReadImage(images, "buttonUpdate") ?? result.ServerUpdateButtonImage;
-            result.SettingsButtonImage = XElementExtender.ReadImage(images, "buttonSettings") ?? result.SettingsButtonImage;
-            result.RefreshButtonImage = XElementExtender.ReadImage(images, "buttonRefresh") ?? result.RefreshButtonImage;
-            result.ServerPatchNotesButtonImage = XElementExtender.ReadImage(images, "buttonPatchnotes") ?? result.ServerPatchNotesButtonImage;
+            Style result = new Style
+            {
+                LauncherTitle = XElementExtender.ReadString(style, "name"),
+                LauncherVersion = XElementExtender.ReadString(style, "version"),
+                LauncherWidth = XElementExtender.ReadInteger(style, "width"),
+                LauncherHeight = XElementExtender.ReadInteger(style, "height"),
+                FontColor = XElementExtender.ReadColor(style, "fontColor"),
+                DialogBackgroundColor = XElementExtender.ReadColor(style, "dialogBackgroundColor"),
+                DialogFontColor = XElementExtender.ReadColor(style, "dialogFontColor"),
+                LauncherBackgroundImage = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,
+                LauncherOverlayImage = XElementExtender.ReadImage(style, "overlay") ?? Properties.Resources.filenotfound,
+                ServerOnlineImage = XElementExtender.ReadImage(images, "serverOnline") ?? Properties.Resources.filenotfound,
+                ServerOfflineImage = XElementExtender.ReadImage(images, "serverOffline") ?? Properties.Resources.filenotfound,
+                ServerPlayButtonImage = XElementExtender.ReadImage(images, "buttonPlay") ?? Properties.Resources.filenotfound,
+                ServerInstallButtonImage = XElementExtender.ReadImage(images, "buttonInstall") ?? Properties.Resources.filenotfound,
+                ServerUninstallButtonImage = XElementExtender.ReadImage(images, "buttonUninstall") ?? Properties.Resources.filenotfound,
+                ServerUpdateButtonImage = XElementExtender.ReadImage(images, "buttonUpdate") ?? Properties.Resources.filenotfound,
+                SettingsButtonImage = XElementExtender.ReadImage(images, "buttonSettings") ?? Properties.Resources.filenotfound,
+                RefreshButtonImage = XElementExtender.ReadImage(images, "buttonRefresh") ?? Properties.Resources.filenotfound,
+                ServerPatchNotesButtonImage = XElementExtender.ReadImage(images, "buttonPatchnotes") ?? Properties.Resources.filenotfound
+            };            
 
             OutputConsole.PrintVerbose(result, 3);
             return result;
-        }        
+        }
     }
 }

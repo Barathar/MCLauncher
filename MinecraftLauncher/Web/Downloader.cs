@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MCLauncher.Utility;
+using System;
 using System.Drawing;
 using System.IO;
 using System.Net;
 
-namespace MCLauncher.Utility
+namespace MCLauncher.Web
 {
     public class Downloader
     {
@@ -23,7 +24,7 @@ namespace MCLauncher.Utility
             }
             catch (WebException e)
             {
-                Console.WriteLine($"Cannot download file '{uri}.'\n{e}");
+                OutputConsole.PrintVerbose(e, $"Cannot download file '{uri}'.", 1);
             }
         }
         public static Image DownloadImage(Uri uri)
@@ -42,7 +43,7 @@ namespace MCLauncher.Utility
             }
             catch (WebException e)
             {
-                Console.WriteLine($"Cannot download file '{uri}.'\n{e}");
+                OutputConsole.PrintVerbose(e, $"Cannot download file '{uri}'.", 1);
                 return Properties.Resources.filenotfound;
             }
 
@@ -64,7 +65,7 @@ namespace MCLauncher.Utility
                 }
                 catch (WebException e)
                 {
-                    Console.WriteLine($"Cannot download file '{uri}.'\n{e}");
+                    OutputConsole.PrintVerbose(e, $"Cannot download file '{uri}'.", 1);
                     return string.Empty;
                 }
             }

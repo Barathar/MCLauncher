@@ -1,11 +1,13 @@
 ﻿using MCLauncher.Configuration;
+using MCLauncher.Utility;
+using MCLauncher.Web;
 using System;
 using System.Drawing;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace MCLauncher.Utility
+namespace MCLauncher.Reader
 {
     public class XElementExtender
     {
@@ -35,8 +37,9 @@ namespace MCLauncher.Utility
 
                 return Image.FromFile(filename);
             }
-            catch (Exception)
-            {
+            catch (Exception e)
+            {                
+                OutputConsole.PrintVerbose(e, $"Unable to load image '{itemName}'.", 1);                
                 return null;
             }
         }

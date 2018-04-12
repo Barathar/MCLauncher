@@ -1,11 +1,13 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
+using MCLauncher.Utility;
+using MCLauncher.Web;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace MCLauncher.Utility
+namespace MCLauncher.Update
 {
     public class LauncherProfilePatcher
     {
@@ -32,7 +34,7 @@ namespace MCLauncher.Utility
 
             WriteProfile(json, filename);
 
-            Console.WriteLine($"Updated {filename}.");
+            OutputConsole.Print($"[Updated] {filename}.");
         }
         private JObject ReadProfile(string filename)
         {

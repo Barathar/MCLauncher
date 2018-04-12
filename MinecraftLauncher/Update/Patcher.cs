@@ -1,6 +1,7 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
 using MCLauncher.Utility;
+using MCLauncher.Web;
 using System.Collections.Generic;
 using System.IO;
 

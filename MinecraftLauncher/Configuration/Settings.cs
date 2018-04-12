@@ -34,6 +34,24 @@ namespace MCLauncher.Configuration
             if (!File.Exists(Paths.SettingsFile))
                 return;
 
+            Deserialize();
+
+            OutputConsole.Print(instance);
+            OutputConsole.Print("[Settings loaded]");
+        }       
+        public void Save()
+        {
+            if (instance == null)
+                return;
+
+            Serialize();
+
+            OutputConsole.Print(instance);
+            OutputConsole.Print("[Settings saved]");
+        }
+
+        private void Deserialize()
+        {
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
             FileStream stream = new FileStream(Paths.SettingsFile, FileMode.Open);
@@ -42,15 +60,9 @@ namespace MCLauncher.Configuration
 
             reader.Close();
             stream.Close();
-
-            OutputConsole.Print(instance);
-            OutputConsole.Print("[Settings loaded]");
         }
-        public void Save()
+        private void Serialize()
         {
-            if (instance == null)
-                return;
-
             XmlSerializer serializer = new XmlSerializer(typeof(Settings));
 
             FileStream stream = new FileStream(Paths.SettingsFile, FileMode.Create);
@@ -58,9 +70,6 @@ namespace MCLauncher.Configuration
             serializer.Serialize(writer, instance);
             writer.Close();
             stream.Close();
-
-            OutputConsole.Print(instance);
-            OutputConsole.Print("[Settings saved]");
         }
     }
 }
