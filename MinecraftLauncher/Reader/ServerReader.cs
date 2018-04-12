@@ -49,8 +49,8 @@ namespace MCLauncher.Reader
             result.Type = XElementExtender.ReadString(launcherProfile, "type");
             result.Icon = XElementExtender.ReadString(launcherProfile, "icon");
             result.LastVersionId = XElementExtender.ReadString(launcherProfile, "lastVersionId");
-            result.JavaArgs = XElementExtender.ReadString(launcherProfile, "gameDir");
-            result.GameDirectory = XElementExtender.ReadString(launcherProfile, "javaArgs");
+            result.JavaArgs = XElementExtender.ReadString(launcherProfile, "javaArgs");
+            result.GameDirectory = XElementExtender.ReadString(launcherProfile, "gameDir");
 
             return result;
         }

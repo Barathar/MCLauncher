@@ -98,7 +98,7 @@ namespace MCLauncher.Utility
         }
         private JProperty CreateJavaArgs(LauncherProfileData data)
         {
-            Regex rgx = new Regex("-Xmx\\d+G");            
+            Regex rgx = new Regex("-Xmx\\d+G");
             return new JProperty("javaArgs", rgx.Replace(data.JavaArgs, $"-Xmx{Settings.Default.RAM}G"));
         }
     }
