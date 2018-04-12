@@ -26,7 +26,7 @@ namespace MCLauncher.Configuration
         public Size Resolution { get; set; } = new Size(800, 600);
         public int RAM { get; set; } = 4;
         public bool ShowDebugConsole { get; set; } = false;
-        public bool DebugVerbose { get; set; } = true;
+        public bool DebugVerbose { get; set; } = false;
         public int VerboseLevel { get; set; } = 1;
 
         public void Load()
