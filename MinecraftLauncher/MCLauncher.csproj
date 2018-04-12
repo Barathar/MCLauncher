@@ -79,6 +79,7 @@
     <Compile Include="Data\PatchFile.cs" />
     <Compile Include="Data\Server.cs" />
     <Compile Include="Data\Launcher.cs" />
+    <Compile Include="Externals\AssemblyLoader.cs" />
     <Compile Include="Reader\PlayerReader.cs" />
     <Compile Include="Reader\ServerstatusReader.cs" />
     <Compile Include="UI\Mainform.cs">
@@ -212,6 +213,7 @@
     <None Include="Images\refresh.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Externals\Newtonsoft.Json.dll" />
     <Content Include="icon.ico" />
     <None Include="Images\default.png" />
   </ItemGroup>

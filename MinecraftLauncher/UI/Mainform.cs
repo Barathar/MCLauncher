@@ -1,5 +1,6 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
+using MCLauncher.Externals;
 using MCLauncher.Reader;
 using MCLauncher.UI;
 using MCLauncher.Utility;
@@ -19,10 +20,12 @@ namespace MinecraftLauncher.UI
         public Mainform()
         {
             InitializeComponent();
-            InitializeImages();            
+            InitializeImages();
 
             Console.SetOut(new OutputConsole(this, consoleTextBox));
             OutputConsole.Print(typeof(Paths));
+
+            AssemblyLoader.Load();
             Settings.Default.Load();            
         }
 
@@ -72,10 +75,10 @@ namespace MinecraftLauncher.UI
                 Settings.Default.Resolution = settingsDialog.Resolution;
                 Settings.Default.RAM = settingsDialog.RAM;
                 Settings.Default.ShowDebugConsole = settingsDialog.Debug;
-                Settings.Default.Save();                
+                Settings.Default.Save();
 
                 consoleTextBox.Visible = Settings.Default.ShowDebugConsole;
-            }            
+            }
         }
 
         // Refreshbutton
@@ -155,7 +158,7 @@ namespace MinecraftLauncher.UI
                 settingsButton.Image = style.SettingsButtonImage;
 
             consoleTextBox.BackColor = style.DialogBackgroundColor;
-            consoleTextBox.ForeColor = style.DialogFontColor;            
+            consoleTextBox.ForeColor = style.DialogFontColor;
             consoleTextBox.Visible = Settings.Default.ShowDebugConsole;
         }
         private void UpdateDialogSize(Style style)
