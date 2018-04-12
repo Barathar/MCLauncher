@@ -27,7 +27,7 @@ namespace MCLauncher.Reader
                 DialogBackgroundColor = XElementExtender.ReadColor(style, "dialogBackgroundColor"),
                 DialogFontColor = XElementExtender.ReadColor(style, "dialogFontColor"),
                 LauncherBackgroundImage = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,
-                LauncherOverlayImage = XElementExtender.ReadImage(style, "overlay") ?? Properties.Resources.filenotfound,
+                LauncherOverlayImage = XElementExtender.ReadImage(images, "overlay") ?? Properties.Resources.filenotfound,
                 ServerOnlineImage = XElementExtender.ReadImage(images, "serverOnline") ?? Properties.Resources.filenotfound,
                 ServerOfflineImage = XElementExtender.ReadImage(images, "serverOffline") ?? Properties.Resources.filenotfound,
                 ServerPlayButtonImage = XElementExtender.ReadImage(images, "buttonPlay") ?? Properties.Resources.filenotfound,
