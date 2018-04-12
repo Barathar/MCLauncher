@@ -68,6 +68,8 @@ namespace MinecraftLauncher.UI
             settingsDialog.Resolution = Settings.Default.Resolution;
             settingsDialog.RAM = Settings.Default.RAM;
             settingsDialog.Debug = Settings.Default.ShowDebugConsole;
+            settingsDialog.DebugVerbose = Settings.Default.DebugVerbose;
+            settingsDialog.VerboseLevel = Settings.Default.VerboseLevel;
 
             if (settingsDialog.ShowDialog() == DialogResult.OK)
             {
@@ -75,6 +77,8 @@ namespace MinecraftLauncher.UI
                 Settings.Default.Resolution = settingsDialog.Resolution;
                 Settings.Default.RAM = settingsDialog.RAM;
                 Settings.Default.ShowDebugConsole = settingsDialog.Debug;
+                Settings.Default.DebugVerbose = settingsDialog.DebugVerbose;
+                Settings.Default.VerboseLevel = settingsDialog.VerboseLevel;
                 Settings.Default.Save();
 
                 consoleTextBox.Visible = Settings.Default.ShowDebugConsole;

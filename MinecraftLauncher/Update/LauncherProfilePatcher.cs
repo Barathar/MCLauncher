@@ -19,7 +19,7 @@ namespace MCLauncher.Update
         }
 
         public void Patch(string filename, LauncherProfileData data)
-        {
+        {            
             if (!File.Exists(filename))
                 Downloader.Download(defaultLauncherProfile, filename);
 

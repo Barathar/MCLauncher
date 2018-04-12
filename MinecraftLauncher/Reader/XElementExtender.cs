@@ -22,8 +22,9 @@ namespace MCLauncher.Reader
         public static Image ReadImage(XElement item, string itemName)
         {
             try
-            {
-                string filename = Path.Combine(Paths.CurrentDirectory, item.XPathSelectElement($"{itemName}/relPath").Value.Replace(@"/", "\\"));
+            {                
+                string relativePath = item.XPathSelectElement($"{itemName}/relPath").Value;
+                string filename = Path.Combine(Paths.CurrentDirectory, relativePath.Replace(@"/", "\\"));
                 if (File.Exists(filename))
                 {
                     string hash = item.XPathSelectElement($"{itemName}/hash").Value;
