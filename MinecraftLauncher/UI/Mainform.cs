@@ -56,6 +56,9 @@ namespace MinecraftLauncher.UI
         // Settingsbutton
         private void ShowSettingsDialog()
         {
+            if (IsAnyServerBusy())
+                return;
+
             settingsDialog.ServerIp = Settings.Default.ServerIp;
             settingsDialog.Resolution = Settings.Default.Resolution;
             settingsDialog.RAM = Settings.Default.RAM;
