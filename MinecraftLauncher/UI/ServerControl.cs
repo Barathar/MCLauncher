@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Windows.Forms;
 using System.Xml.Linq;
@@ -190,6 +191,36 @@ namespace MCLauncher.UI
             playersLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], playersLabel.Font.Size);
             playersLabel.ForeColor = style.FontColor;
             playersLabel.Text = $"{status.CurrentPlayers}/{status.MaxPlayers}";
+
+            UpdatePlayerList(status.Players);
+        }
+        private void UpdatePlayerList(List<Player> players)
+        {
+            for (int index = playersFlowLayoutPanel.Controls.Count - 1; index >= 0; index--)
+            {                
+                if (players.Any(e => e.Name == playersFlowLayoutPanel.Controls[index].Name))
+                    continue;
+
+                playersFlowLayoutPanel.Controls.Remove(playersFlowLayoutPanel.Controls[index]);
+            }
+
+            foreach (var player in players)
+            {
+                Control[] current = playersFlowLayoutPanel.Controls.Find(player.Name, false);
+                if (current.Length <= 0)
+                {
+                    PictureBox playerBox = new PictureBox();
+                    playerBox.BackColor = Color.Transparent;
+                    playerBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                    playerBox.Width = 20;
+                    playerBox.Height = 20;
+                    playerBox.Name = player.Name;
+                    playerBox.Image = player.Image;                    
+                    playersFlowLayoutPanel.Controls.Add(playerBox);
+
+                    new ToolTip().SetToolTip(playerBox, player.Name);
+                }
+            }
         }
         private void UpdateControls()
         {

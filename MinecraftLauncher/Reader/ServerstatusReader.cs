@@ -17,6 +17,7 @@ namespace MCLauncher.Reader
             result.MessageOfTheDay = XElementExtender.ReadString(root, "motd");
             result.MaxPlayers = XElementExtender.ReadInteger(root, "playerMax");
             result.CurrentPlayers = XElementExtender.ReadInteger(root, "playerOnline");
+            result.Players = new PlayerReader().Read(document);
 
             return result;
         }     

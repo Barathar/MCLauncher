@@ -39,6 +39,7 @@
             this.downloadThread = new System.ComponentModel.BackgroundWorker();
             this.motdLabel = new System.Windows.Forms.Label();
             this.playersLabel = new System.Windows.Forms.Label();
+            this.playersFlowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.button)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.serverStatus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.uninstallButton)).BeginInit();
@@ -157,12 +158,21 @@
             // playersLabel
             // 
             this.playersLabel.Font = new System.Drawing.Font("Verdana", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.playersLabel.Location = new System.Drawing.Point(373, 63);
+            this.playersLabel.Location = new System.Drawing.Point(373, 70);
             this.playersLabel.Name = "playersLabel";
             this.playersLabel.Size = new System.Drawing.Size(100, 18);
             this.playersLabel.TabIndex = 9;
             this.playersLabel.Text = "playersLabel";
             this.playersLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // playersFlowLayoutPanel
+            // 
+            this.playersFlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.playersFlowLayoutPanel.Location = new System.Drawing.Point(153, 38);
+            this.playersFlowLayoutPanel.Name = "playersFlowLayoutPanel";
+            this.playersFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.playersFlowLayoutPanel.Size = new System.Drawing.Size(320, 23);
+            this.playersFlowLayoutPanel.TabIndex = 10;
             // 
             // ServerControl
             // 
@@ -170,6 +180,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.Controls.Add(this.playersFlowLayoutPanel);
             this.Controls.Add(this.playersLabel);
             this.Controls.Add(this.motdLabel);
             this.Controls.Add(this.patchNotesButton);
@@ -206,5 +217,6 @@
         private System.ComponentModel.BackgroundWorker downloadThread;
         private System.Windows.Forms.Label motdLabel;
         private System.Windows.Forms.Label playersLabel;
+        private System.Windows.Forms.FlowLayoutPanel playersFlowLayoutPanel;
     }
 }

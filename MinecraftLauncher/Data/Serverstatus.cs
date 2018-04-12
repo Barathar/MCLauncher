@@ -1,4 +1,6 @@
-﻿namespace MCLauncher.Data
+﻿using System.Collections.Generic;
+
+namespace MCLauncher.Data
 {
     public class Serverstatus
     {
@@ -6,7 +8,6 @@
         public string MessageOfTheDay { get; set; }
         public int MaxPlayers { get; set; }
         public int CurrentPlayers { get; set; }
-
-        //TODO READ players
+        public List<Player> Players { get; set; }
     }
 }
