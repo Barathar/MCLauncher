@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MCLauncher.Utility;
+using System.Collections.Generic;
 
 namespace MCLauncher.Data
 {
@@ -8,6 +9,7 @@ namespace MCLauncher.Data
         public string MessageOfTheDay { get; set; }
         public int MaxPlayers { get; set; }
         public int CurrentPlayers { get; set; }
+        [SkipProperty]
         public List<Player> Players { get; set; }
     }
 }

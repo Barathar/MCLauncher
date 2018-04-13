@@ -11,6 +11,7 @@ namespace MCLauncher.Configuration
     {
         private static Settings instance = null;
 
+        [SkipProperty]
         public static Settings Default
         {
             get

@@ -1,13 +1,25 @@
 ﻿using MCLauncher.Configuration;
+using MCLauncher.Data;
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
 namespace MCLauncher.Utility
 {
+    public class SkipPropertyAttribute : Attribute
+    {
+    }
+
+
     public class OutputConsole : TextWriter
-    {        
+    {
+        private static List<Type> excludes = new List<Type>() { typeof(Bitmap) };
+
         Form form = null;
         TextBox textBox = null;
 
@@ -34,7 +46,7 @@ namespace MCLauncher.Utility
 
         public static void PrintVerbose(string message, int level)
         {
-            if (Settings.Default.DebugVerbose && level <= Settings.Default.VerboseLevel)
+            if (VerboseAvailable(level))
             {
                 Print(message);
             }
@@ -45,7 +57,7 @@ namespace MCLauncher.Utility
         }
         public static void PrintVerbose(Type type, int level)
         {
-            if (Settings.Default.DebugVerbose && level <= Settings.Default.VerboseLevel)
+            if (VerboseAvailable(level))
             {
                 Print(type);
             }
@@ -54,14 +66,14 @@ namespace MCLauncher.Utility
         {
             Console.WriteLine($"[{type.Name}]");
 
-            foreach (var prop in type.GetProperties())
+            foreach (var prop in GetValidProperties(type))
             {
                 Console.WriteLine("{0}: {1}", prop.Name, prop.GetValue(type, null));
             }
         }
         public static void PrintVerbose(object obj, int level)
         {
-            if (Settings.Default.DebugVerbose && level <= Settings.Default.VerboseLevel)
+            if (VerboseAvailable(level))
             {
                 Print(obj);
             }
@@ -71,7 +83,7 @@ namespace MCLauncher.Utility
             Type type = obj.GetType();
             Console.WriteLine($"[{type.Name}]");
 
-            foreach (var prop in type.GetProperties())
+            foreach (var prop in GetValidProperties(type))
             {
                 Console.WriteLine("{0}: {1}", prop.Name, prop.GetValue(obj, null));
             }
@@ -82,7 +94,7 @@ namespace MCLauncher.Utility
         }
         public static void PrintVerbose(Exception e, string message, int level)
         {
-            if (Settings.Default.DebugVerbose && level <= Settings.Default.VerboseLevel)
+            if (VerboseAvailable(level))
             {
                 OutputConsole.Print("################### EXCEPTION ##############");
                 if (message != null)
@@ -92,6 +104,15 @@ namespace MCLauncher.Utility
                 OutputConsole.Print(e);
                 OutputConsole.Print("############################################");
             }
+        }
+
+        private static PropertyInfo[] GetValidProperties(Type type)
+        {
+            return type.GetProperties().Where(pi => pi.GetCustomAttributes(typeof(SkipPropertyAttribute), true).Length == 0).ToArray();
+        }
+        private static bool VerboseAvailable(int level)
+        {
+            return Settings.Default.DebugVerbose && level <= Settings.Default.VerboseLevel;
         }
     }
 }

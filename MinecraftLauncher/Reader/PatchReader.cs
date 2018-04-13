@@ -43,7 +43,7 @@ namespace MCLauncher.Reader
                 Hash = XElementExtender.ReadString(item, "hash")
             };
 
-            OutputConsole.PrintVerbose(result, 3);
+            OutputConsole.PrintVerbose(result, 5);
             return result;
         }
         private CleanupDirectory ReadCleanupDirectory(XElement item)
@@ -53,7 +53,7 @@ namespace MCLauncher.Reader
                 LocalDirectory = item.Value
             };
 
-            OutputConsole.PrintVerbose(result, 3);
+            OutputConsole.PrintVerbose(result, 5);
             return result;
         }
     }
