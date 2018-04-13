@@ -193,8 +193,7 @@
             this.Controls.Add(this.button);
             this.DoubleBuffered = true;
             this.Name = "ServerControl";
-            this.Size = new System.Drawing.Size(495, 150);
-            this.Load += new System.EventHandler(this.OnLoad);
+            this.Size = new System.Drawing.Size(495, 150);            
             ((System.ComponentModel.ISupportInitialize)(this.button)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.serverStatus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.uninstallButton)).EndInit();

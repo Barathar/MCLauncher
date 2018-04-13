@@ -20,52 +20,47 @@ namespace MCLauncher.UI
 {
     public partial class ServerControl : UserControl
     {
-        // TODO grab playerstatus and write into ServerInfo        
-
         private Server server = null;
         private Style style = null;
-
-        private string launcherFile = null;
-        private Uri defaultLauncherProfile = null;
+        private Uri launcherProfile = null;
         private string launcherProfilesPath = null;
+        private string launcherExecutable = null;
 
         private Patcher patcher = new Patcher();
         private Cleaner cleaner = new Cleaner();
         private Timer statusUpdateTimer = new Timer();
 
-        public bool IsBusy { get { return downloadThread.IsBusy; } }
-
-        private string InstallationDirectory { get { return Path.Combine(Paths.CurrentDirectory, server.Version); } }
-        public bool InstallationDirectoryExists { get { return Directory.Exists(InstallationDirectory); } }
-        private string LauncherWorkDirectory { get { return Path.Combine(Paths.CurrentDirectory, ".minecraft"); } }
-        private bool IsMinecraftLauncherAvailable { get { return File.Exists(launcherFile); } }
-
-        public ServerControl(Server server, Style style, Uri defaultLauncherProfile, string launcherProfilesPath, string launcherFile)
+        public ServerControl(Server server, Style style, Uri launcherProfile, string launcherProfilesPath, string launcherExecutable)
         {
             this.server = server;
             this.style = style;
-            this.defaultLauncherProfile = defaultLauncherProfile;
+            this.launcherProfile = launcherProfile;
             this.launcherProfilesPath = launcherProfilesPath;
-            this.launcherFile = launcherFile;
+            this.launcherExecutable = launcherExecutable;
             Visible = false;
 
             InitializeComponent();
-            InitializeTimer();
             InitializeSize();
+            InitializeTimer();
             RegisterEvents();
             DownloadPatchFileInfo();
             DownloadServerstatus();
         }
 
-        private void OnLoad(object sender, EventArgs e)
+        public bool InstallationDirectoryExists()
         {
-            statusUpdateTimer.Start();
+            string installDir = GetInstallationDirectory();
+            return Directory.Exists(installDir);
         }
+        public bool IsBusy()
+        {
+            return downloadThread.IsBusy;
+        }
+
         private void OnTimerTick(Object sender, EventArgs eventArgs)
         {
             DownloadServerstatus();
         }
-
         private void OnDoWork(object sender, DoWorkEventArgs e)
         {
             HandleMainButtonClick();
@@ -88,7 +83,7 @@ namespace MCLauncher.UI
                 return;
 
             XDocument document = XDocument.Parse(e.Result, LoadOptions.None);
-            UpdateHelper(document);
+            UpdatePatchFiles(document);
             UpdateControls();
         }
         private void OnDownloadServerstatusCompleted(object sender, DownloadStringCompletedEventArgs e)
@@ -97,7 +92,6 @@ namespace MCLauncher.UI
                 return;
 
             XDocument document = XDocument.Parse(e.Result, LoadOptions.None);
-
             Serverstatus status = new ServerstatusReader().Read(document);
             UpdateStatusControls(status);
         }
@@ -111,32 +105,23 @@ namespace MCLauncher.UI
         }
         private void OnUninstallButtonClicked(object sender, EventArgs e)
         {
-            statusUpdateTimer.Stop();
-            ConfirmDialog dlg = new ConfirmDialog(style, $"Uninstall '{server.Name} ({server.Version})'?");
-            if (dlg.ShowDialog() == DialogResult.OK)
-                new Uninstaller().Uninstall(InstallationDirectory);
-
-            UpdateControls();
-            statusUpdateTimer.Start();
+            UninstallFiles();
         }
         private void OnPatchNotesButtonClicked(object sender, EventArgs e)
         {
-            statusUpdateTimer.Stop();
-            PatchNotes dlg = new PatchNotes(style, server.PatchNotesUri);
-            dlg.ShowDialog();
-            statusUpdateTimer.Start();
+            ShowPatchNotes();
         }
 
-        private void InitializeTimer()
-        {
-            statusUpdateTimer.Tick += new EventHandler(OnTimerTick);
-            statusUpdateTimer.Interval = server.StatusPollingInterval;
-            statusUpdateTimer.Start();
-        }
         private void InitializeSize()
         {
             Width = style.ServerWidth;
             Height = style.ServerHeight;
+        }
+        private void InitializeTimer()
+        {
+            statusUpdateTimer.Tick += new EventHandler(OnTimerTick);
+            statusUpdateTimer.Interval = server.StatusPollingInterval;
+            EnableTimer(true);
         }
         private void RegisterEvents()
         {
@@ -145,11 +130,12 @@ namespace MCLauncher.UI
 
         private void HandleMainButtonClick()
         {
-            statusUpdateTimer.Stop();
+            EnableTimer(false);
+
             if (patcher.UpdateNeeded)
             {
-                Patch();
-                Clean();
+                PatchFiles();
+                CleanFiles();
             }
             else
             {
@@ -157,7 +143,8 @@ namespace MCLauncher.UI
                 CopyServersFile();
                 LaunchMinecraft();
             }
-            statusUpdateTimer.Start();
+
+            EnableTimer(true);
         }
         private void DownloadPatchFileInfo()
         {
@@ -175,7 +162,7 @@ namespace MCLauncher.UI
                 client.DownloadStringAsync(server.StatusUri);
             }
         }
-        private void UpdateHelper(XDocument document)
+        private void UpdatePatchFiles(XDocument document)
         {
             PatchReader reader = new PatchReader();
 
@@ -186,6 +173,7 @@ namespace MCLauncher.UI
             cleaner.PatchFiles = patchFiles;
             cleaner.CleanupDirectories = cleanupDirectories;
         }
+
         private void UpdateStatusControls(Serverstatus status)
         {
             serverStatus.Image = status.Online ? style.ServerOnlineImage : style.ServerOfflineImage;
@@ -205,7 +193,7 @@ namespace MCLauncher.UI
         private void UpdatePlayerList(List<Player> players)
         {
             for (int index = playersFlowLayoutPanel.Controls.Count - 1; index >= 0; index--)
-            {                
+            {
                 if (players.Any(e => e.Name == playersFlowLayoutPanel.Controls[index].Name))
                     continue;
 
@@ -223,16 +211,17 @@ namespace MCLauncher.UI
                     playerBox.Width = 20;
                     playerBox.Height = 20;
                     playerBox.Name = player.Name;
-                    playerBox.Image = player.Image;                    
+                    playerBox.Image = player.Image;
                     playersFlowLayoutPanel.Controls.Add(playerBox);
 
                     new ToolTip().SetToolTip(playerBox, player.Name);
                 }
             }
         }
+
         private void UpdateControls()
         {
-            BackgroundImage = InstallationDirectoryExists ? server.Image : server.GrayScaledImage;
+            BackgroundImage = InstallationDirectoryExists() ? server.Image : server.GrayScaledImage;
 
             nameLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], nameLabel.Font.Size);
             nameLabel.ForeColor = style.FontColor;
@@ -247,27 +236,26 @@ namespace MCLauncher.UI
             ipLabel.Text = server.Ip;
 
             progressBar.Value = 0;
-            progressBar.Visible = !InstallationDirectoryExists || patcher.UpdateNeeded;
+            progressBar.Visible = !InstallationDirectoryExists() || patcher.UpdateNeeded;
 
             button.Image = GetButtonImage();
 
             uninstallButton.Image = style.ServerUninstallButtonImage;
-            uninstallButton.Visible = InstallationDirectoryExists;
+            uninstallButton.Visible = InstallationDirectoryExists();
 
             patchNotesButton.Image = style.ServerPatchNotesButtonImage;
 
             Visible = true;
         }
-
         private Image GetButtonImage()
         {
-            if (!InstallationDirectoryExists)
+            if (!InstallationDirectoryExists())
                 return style.ServerInstallButtonImage;
 
             if (patcher.UpdateNeeded)
                 return style.ServerUpdateButtonImage;
 
-            if (!IsMinecraftLauncherAvailable)
+            if (!LauncherExecutableExists())
                 return ImageManipulation.CreateGrayScaledImage(style.ServerPlayButtonImage as Bitmap);
 
             return style.ServerPlayButtonImage;
@@ -275,42 +263,75 @@ namespace MCLauncher.UI
 
         private void PatchLauncherProfile()
         {
-            LauncherProfilePatcher patcher = new LauncherProfilePatcher(defaultLauncherProfile);
-            patcher.Patch(Path.Combine(Paths.CurrentDirectory, launcherProfilesPath), server.LauncherProfileData);
+            LauncherProfilePatcher patcher = new LauncherProfilePatcher(launcherProfile);
+            patcher.Patch(launcherProfilesPath, server.LauncherProfileData);
+
+            OutputConsole.Print($"[Patching] {launcherProfilesPath}");
         }
         private void CopyServersFile()
         {
-            string source = Path.Combine(Paths.CurrentDirectory, server.Version, "Servers.dat");
-            string destination = Path.Combine(Paths.CurrentDirectory, ".minecraft", "Servers.dat");
-
-            if (File.Exists(destination))
+            if (File.Exists(Paths.ServersFile))
             {
-                File.Delete(destination);
-                Console.WriteLine($"Deleting {destination}");
+                File.Delete(Paths.ServersFile);
+                OutputConsole.Print($"[Deleting] {Paths.ServersFile}");
             }
 
-            if (File.Exists(source))
+            string sourceFile = Path.Combine(Paths.CurrentDirectory, server.Version, "Servers.dat");
+            if (File.Exists(sourceFile))
             {
-                File.Copy(source, destination);
-                Console.WriteLine($"Copying {source}");
+                File.Copy(sourceFile, Paths.ServersFile);
+                OutputConsole.Print($"[Copying] {sourceFile}");
             }
         }
         private void LaunchMinecraft()
         {
-            if (!IsMinecraftLauncherAvailable)
+            if (!LauncherExecutableExists())
                 return;
 
-            string parameters = $"--workDir {LauncherWorkDirectory}";
-            Console.WriteLine($"Running '{launcherFile}'\n with parameters '{parameters}'.");
-            Process.Start(launcherFile, parameters);
+            string parameters = $"--workDir {Paths.LauncherWorkingDirectory}";
+            Process.Start(launcherExecutable, parameters);
+            OutputConsole.Print($"[Running] {launcherExecutable}'\n with parameters '{parameters}'");
         }
-        private void Patch()
+        private void PatchFiles()
         {
             patcher.Patch();
         }
-        private void Clean()
+        private void CleanFiles()
         {
             cleaner.Clean();
+        }
+        private void UninstallFiles()
+        {
+            EnableTimer(false);
+            ConfirmDialog dlg = new ConfirmDialog(style, $"Uninstall '{server.Name} ({server.Version})'?");
+            if (dlg.ShowDialog() == DialogResult.OK)
+                new Uninstaller().Uninstall(GetInstallationDirectory());
+
+            UpdateControls();
+            EnableTimer(true);
+        }
+        private void ShowPatchNotes()
+        {
+            EnableTimer(false);
+            PatchNotes dlg = new PatchNotes(style, server.PatchNotesUri);
+            dlg.ShowDialog();
+            EnableTimer(true);
+        }
+
+        private string GetInstallationDirectory()
+        {
+            return Path.Combine(Paths.CurrentDirectory, server.Version);
+        }
+        private bool LauncherExecutableExists()
+        {
+            return File.Exists(launcherExecutable);
+        }
+        private void EnableTimer(bool enable)
+        {
+            if (enable && !statusUpdateTimer.Enabled)
+                statusUpdateTimer.Start();
+            else
+                statusUpdateTimer.Stop();
         }
     }
 }

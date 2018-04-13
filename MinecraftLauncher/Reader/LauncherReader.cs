@@ -12,11 +12,13 @@ namespace MCLauncher.Reader
     {
         public Launcher Read(XDocument document)
         {
+            XElement launcher = document.XPathSelectElement("root/launcher");
+
             Launcher result = new Launcher
             {
-                Executable = Path.Combine(Paths.CurrentDirectory, document.XPathSelectElement("root/launcher/launcherExecutable/relPath").Value),
-                DefaultProfiles = new Uri(document.XPathSelectElement("root/launcher/launcherProfilesJson/url").Value),
-                ProfilesPath = document.XPathSelectElement("root/launcher/launcherProfilesJson/relPath").Value,
+                Executable = Path.Combine(Paths.CurrentDirectory, XElementExtender.ReadString(launcher, "launcherExecutable/relPath")),
+                DefaultProfiles = XElementExtender.ReadUri(launcher, "launcherProfilesJson/url"),
+                ProfilesPath = Path.Combine(Paths.CurrentDirectory, XElementExtender.ReadString(launcher, "launcherProfilesJson/relPath")),
                 Server = new ServerReader().Read(document),
                 Style = new StyleReader().Read(document)
             };

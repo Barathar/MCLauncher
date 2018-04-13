@@ -97,7 +97,7 @@ namespace MinecraftLauncher.UI
         {
             foreach (ServerControl control in serverPanel.Controls)
             {
-                if (control.IsBusy)
+                if (control.IsBusy())
                     return true;
             }
 
