@@ -68,6 +68,7 @@ namespace MCLauncher.UI
         private void OnWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             UpdateControls();
+            EnableTimer(true);
         }
         private void OnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -100,6 +101,7 @@ namespace MCLauncher.UI
             if (downloadThread.IsBusy)
                 return;
 
+            EnableTimer(false);
             uninstallButton.Visible = false;
             downloadThread.RunWorkerAsync();
         }
@@ -128,24 +130,6 @@ namespace MCLauncher.UI
             patcher.UpdateProgress += OnPatcherUpdateProgress;
         }
 
-        private void HandleMainButtonClick()
-        {
-            EnableTimer(false);
-
-            if (patcher.UpdateNeeded)
-            {
-                PatchFiles();
-                CleanFiles();
-            }
-            else
-            {
-                PatchLauncherProfile();
-                CopyServersFile();
-                LaunchMinecraft();
-            }
-
-            EnableTimer(true);
-        }
         private void DownloadPatchFileInfo()
         {
             using (var client = new WebClient())
@@ -261,6 +245,28 @@ namespace MCLauncher.UI
             return style.ServerPlayButtonImage;
         }
 
+        private void HandleMainButtonClick()
+        {            
+            if (patcher.UpdateNeeded)
+            {
+                PatchFiles();
+                CleanFiles();
+            }
+            else
+            {
+                PatchLauncherProfile();
+                CopyServersFile();
+                LaunchMinecraft();
+            }                        
+        }        
+        private void PatchFiles()
+        {
+            patcher.Patch();
+        }
+        private void CleanFiles()
+        {
+            cleaner.Clean();
+        }
         private void PatchLauncherProfile()
         {
             LauncherProfilePatcher patcher = new LauncherProfilePatcher(launcherProfile);
@@ -291,14 +297,6 @@ namespace MCLauncher.UI
             string parameters = $"--workDir {Paths.LauncherWorkingDirectory}";
             Process.Start(launcherExecutable, parameters);
             OutputConsole.Print($"[Running] {launcherExecutable}'\n with parameters '{parameters}'");
-        }
-        private void PatchFiles()
-        {
-            patcher.Patch();
-        }
-        private void CleanFiles()
-        {
-            cleaner.Clean();
         }
         private void UninstallFiles()
         {
