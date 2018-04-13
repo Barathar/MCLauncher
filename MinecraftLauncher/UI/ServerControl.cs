@@ -246,7 +246,7 @@ namespace MCLauncher.UI
         }
 
         private void HandleMainButtonClick()
-        {            
+        {
             if (patcher.UpdateNeeded)
             {
                 PatchFiles();
@@ -257,8 +257,8 @@ namespace MCLauncher.UI
                 PatchLauncherProfile();
                 CopyServersFile();
                 LaunchMinecraft();
-            }                        
-        }        
+            }
+        }
         private void PatchFiles()
         {
             patcher.Patch();
