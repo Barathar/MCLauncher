@@ -16,7 +16,7 @@ namespace MCLauncher.Data
         [SkipProperty]
         public Image RefreshButtonImage { get; set; } = Properties.Resources.refresh;
         [SkipProperty]
-        public Image SettingsButtonImage { get; set; } = Properties.Resources.uninstall;
+        public Image SettingsButtonImage { get; set; } = Properties.Resources._default;
 
         public int ServerWidth { get; set; } = 500;
         public int ServerHeight { get; set; } = 150;
@@ -29,7 +29,9 @@ namespace MCLauncher.Data
         [SkipProperty]
         public Image ServerInstallButtonImage { get; set; } = Properties.Resources.download;
         [SkipProperty]
-        public Image ServerUninstallButtonImage { get; set; } = Properties.Resources.download;
+        public Image ServerUninstallButtonImage { get; set; } = Properties.Resources.uninstall;
+        [SkipProperty]
+        public Image ServerUninstallButtonGrayScaledImage { get; set; } = Properties.Resources.uninstall;
         [SkipProperty]
         public Image ServerUpdateButtonImage { get; set; } = Properties.Resources.update;
         [SkipProperty]

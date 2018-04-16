@@ -1,5 +1,7 @@
 ﻿using MCLauncher.Data;
+using MCLauncher.Images;
 using MCLauncher.Utility;
+using System.Drawing;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -37,7 +39,10 @@ namespace MCLauncher.Reader
                 SettingsButtonImage = XElementExtender.ReadImage(images, "buttonSettings") ?? Properties.Resources.filenotfound,
                 RefreshButtonImage = XElementExtender.ReadImage(images, "buttonRefresh") ?? Properties.Resources.filenotfound,
                 ServerPatchNotesButtonImage = XElementExtender.ReadImage(images, "buttonPatchnotes") ?? Properties.Resources.filenotfound
-            };            
+            };
+
+            result.ServerUninstallButtonGrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.ServerUninstallButtonImage as Bitmap);
+
 
             OutputConsole.PrintVerbose(result, 3);
             return result;

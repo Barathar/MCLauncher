@@ -99,7 +99,7 @@ namespace MCLauncher.UI
                 return;
 
             EnableTimer(false);
-            uninstallButton.Visible = false;
+            uninstallButton.Enabled = false;
             downloadThread.RunWorkerAsync();
         }
         private void OnUninstallButtonClicked(object sender, EventArgs e)
@@ -221,8 +221,8 @@ namespace MCLauncher.UI
 
             button.Image = GetButtonImage();
 
-            uninstallButton.Image = style.ServerUninstallButtonImage;
-            uninstallButton.Visible = InstallationDirectoryExists();
+            uninstallButton.Image = InstallationDirectoryExists() ? style.ServerUninstallButtonImage : style.ServerUninstallButtonGrayScaledImage;
+            uninstallButton.Enabled = InstallationDirectoryExists();
 
             patchNotesButton.Image = style.ServerPatchNotesButtonImage;
 
