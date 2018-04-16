@@ -12,7 +12,7 @@ namespace MCLauncher.Reader
     {
         public List<Server> Read(XDocument document)
         {
-            XElement versions = document.XPathSelectElement("root/versions");           
+            XElement versions = document.XPathSelectElement("root/versions");
 
             List<Server> result = new List<Server>();
             foreach (var server in versions.XPathSelectElements("item"))
@@ -38,7 +38,7 @@ namespace MCLauncher.Reader
                 StatusUri = XElementExtender.ReadUri(server, "status"),
                 PatchNotesUri = XElementExtender.ReadUri(server, "patchnotesUrl"),
                 PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl"),
-                Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,                
+                Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,
                 LauncherProfileData = ReadLauncherProfileData(launcherProfile),
                 Resourcepacks = ReadResourcepacks(resourcepacks)
             };

@@ -53,7 +53,7 @@ namespace MinecraftLauncher.UI
         {
             if (e.Error != null)
                 return;
-
+            
             UpdateLauncher(e.Result);
         }
 
@@ -107,6 +107,7 @@ namespace MinecraftLauncher.UI
         private void UpdateLauncher(string webresponse)
         {
             XDocument document = XDocument.Parse(webresponse, LoadOptions.None);
+            StartupCheck.CheckForNewVersion(document);
             Launcher launcher = new LauncherReader().Read(document);
             UpdateControls(launcher);
         }

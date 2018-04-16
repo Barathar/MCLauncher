@@ -1,7 +1,6 @@
-﻿using MCLauncher.Configuration;
+﻿using MCLauncher.Utility;
 using MinecraftLauncher.UI;
 using System;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace MinecraftLauncher
@@ -14,11 +13,7 @@ namespace MinecraftLauncher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            if (Paths.CurrentDirectory.Any(x => Char.IsWhiteSpace(x)))
-            {
-                MessageBox.Show($"Executable path with whitespaces is not allowed! ({Paths.CurrentDirectory}).");
-                return;
-            }
+            StartupCheck.CheckForValidExecutablePath();
 
             Application.Run(new Mainform());
         }
