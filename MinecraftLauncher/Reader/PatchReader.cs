@@ -13,7 +13,7 @@ namespace MCLauncher.Reader
             XElement files = document.XPathSelectElement("root/files");
 
             List<PatchFile> result = new List<PatchFile>();
-            foreach (var item in files.Descendants("item"))
+            foreach (var item in files.XPathSelectElements("item"))
             {
                 result.Add(ReadPatchFile(item));
             }
@@ -25,7 +25,7 @@ namespace MCLauncher.Reader
             XElement cleanupList = document.XPathSelectElement("root/cleanupDirectoryList");
 
             List<CleanupDirectory> result = new List<CleanupDirectory>();
-            foreach (var item in cleanupList.Descendants("item"))
+            foreach (var item in cleanupList.XPathSelectElements("item"))
             {
                 result.Add(ReadCleanupDirectory(item));
             }

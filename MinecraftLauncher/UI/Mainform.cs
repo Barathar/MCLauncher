@@ -133,7 +133,7 @@ namespace MinecraftLauncher.UI
                 Control[] current = serverPanel.Controls.Find(server.Version, false);
                 if (current.Length <= 0)
                 {
-                    ServerControl control = new ServerControl(server, launcher.Style, launcher.DefaultProfiles, launcher.ProfilesPath, launcher.Executable);
+                    ServerControl control = new ServerControl(server, launcher.Style, launcher.FileInfos);
                     control.Name = server.Version;
                     serverPanel.Controls.Add(control);
                 }

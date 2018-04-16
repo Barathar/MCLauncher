@@ -1,5 +1,6 @@
 ﻿using MCLauncher.Utility;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace MCLauncher.Data
@@ -16,6 +17,8 @@ namespace MCLauncher.Data
         public Uri PatchFilesUri { get; set; }
         [SkipProperty]
         public LauncherProfileData LauncherProfileData { get; set; }
+        [SkipProperty]
+        public List<string> Resourcepacks { get; set; }
         [SkipProperty]
         public Image Image { get; set; } = Properties.Resources._default;
         [SkipProperty]

@@ -72,6 +72,7 @@
     <Compile Include="Configuration\Paths.cs" />
     <Compile Include="Configuration\Settings.cs" />
     <Compile Include="Data\CleanupDirectory.cs" />
+    <Compile Include="Data\FileInfos.cs" />
     <Compile Include="Data\LauncherProfileData.cs" />
     <Compile Include="Data\Player.cs" />
     <Compile Include="Data\Serverstatus.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Data\Launcher.cs" />
     <Compile Include="Externals\AssemblyLoader.cs" />
     <Compile Include="Reader\PlayerReader.cs" />
+    <Compile Include="Reader\FileInfosReader.cs" />
     <Compile Include="Reader\ServerstatusReader.cs" />
     <Compile Include="UI\Mainform.cs">
       <SubType>Form</SubType>
@@ -119,6 +121,7 @@
       <DependentUpon>SettingsDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Update\Cleaner.cs" />
+    <Compile Include="Update\OptionsPatcher.cs" />
     <Compile Include="Update\Uninstaller.cs" />
     <Compile Include="Web\Downloader.cs" />
     <Compile Include="Update\Patcher.cs" />

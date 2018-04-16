@@ -22,21 +22,18 @@ namespace MCLauncher.UI
     {
         private Server server = null;
         private Style style = null;
-        private Uri launcherProfile = null;
-        private string launcherProfilesPath = null;
-        private string launcherExecutable = null;
+        private FileInfos fileInfos = null;
 
         private Patcher patcher = new Patcher();
         private Cleaner cleaner = new Cleaner();
         private Timer statusUpdateTimer = new Timer();
 
-        public ServerControl(Server server, Style style, Uri launcherProfile, string launcherProfilesPath, string launcherExecutable)
+        public ServerControl(Server server, Style style, FileInfos fileInfos)
         {
             this.server = server;
             this.style = style;
-            this.launcherProfile = launcherProfile;
-            this.launcherProfilesPath = launcherProfilesPath;
-            this.launcherExecutable = launcherExecutable;
+            this.fileInfos = fileInfos;
+
             Visible = false;
 
             InitializeComponent();
@@ -255,6 +252,7 @@ namespace MCLauncher.UI
             else
             {
                 PatchLauncherProfile();
+                PatchOptions();
                 CopyServersFile();
                 LaunchMinecraft();
             }
@@ -269,10 +267,18 @@ namespace MCLauncher.UI
         }
         private void PatchLauncherProfile()
         {
-            LauncherProfilePatcher patcher = new LauncherProfilePatcher(launcherProfile);
-            patcher.Patch(launcherProfilesPath, server.LauncherProfileData);
+            LauncherProfilePatcher patcher = new LauncherProfilePatcher(fileInfos.DefaultProfiles);
+            patcher.Patch(fileInfos.ProfilesPath, server.LauncherProfileData);
 
-            OutputConsole.Print($"[Patching] {launcherProfilesPath}");
+            OutputConsole.Print($"[Patching] {fileInfos.ProfilesPath}");
+        }
+        private void PatchOptions()
+        {
+            OptionsPatcher patcher = new OptionsPatcher(fileInfos.DefaultOptions);
+            string filename = Path.Combine(GetInstallationDirectory(), fileInfos.OptionsPath);
+            patcher.Patch(filename, server.Resourcepacks);
+
+            OutputConsole.Print($"[Patching] {filename}");
         }
         private void CopyServersFile()
         {
@@ -295,8 +301,8 @@ namespace MCLauncher.UI
                 return;
 
             string parameters = $"--workDir {Paths.LauncherWorkingDirectory}";
-            Process.Start(launcherExecutable, parameters);
-            OutputConsole.Print($"[Running] {launcherExecutable}'\n with parameters '{parameters}'");
+            Process.Start(fileInfos.Executable, parameters);
+            OutputConsole.Print($"[Running] {fileInfos.Executable}'\n with parameters '{parameters}'");
         }
         private void UninstallFiles()
         {
@@ -322,7 +328,7 @@ namespace MCLauncher.UI
         }
         private bool LauncherExecutableExists()
         {
-            return File.Exists(launcherExecutable);
+            return File.Exists(fileInfos.Executable);
         }
         private void EnableTimer(bool enable)
         {

@@ -12,10 +12,10 @@ namespace MCLauncher.Reader
     {
         public List<Server> Read(XDocument document)
         {
-            XElement versions = document.XPathSelectElement("root/versions");
+            XElement versions = document.XPathSelectElement("root/versions");           
 
             List<Server> result = new List<Server>();
-            foreach (var server in versions.Descendants("item"))
+            foreach (var server in versions.XPathSelectElements("item"))
             {
                 result.Add(ReadServer(server));
             }
@@ -27,6 +27,7 @@ namespace MCLauncher.Reader
         {
             XElement images = server.XPathSelectElement("style/images");
             XElement launcherProfile = server.XPathSelectElement("launcherProfile");
+            XElement resourcepacks = server.XPathSelectElement("options/resourcepacks");
 
             Server result = new Server
             {
@@ -38,7 +39,8 @@ namespace MCLauncher.Reader
                 PatchNotesUri = XElementExtender.ReadUri(server, "patchnotesUrl"),
                 PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl"),
                 Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,                
-                LauncherProfileData = ReadLauncherProfileData(launcherProfile)
+                LauncherProfileData = ReadLauncherProfileData(launcherProfile),
+                Resourcepacks = ReadResourcepacks(resourcepacks)
             };
 
             result.GrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.Image as Bitmap);
@@ -59,6 +61,16 @@ namespace MCLauncher.Reader
             };
 
             OutputConsole.PrintVerbose(result, 1);
+            return result;
+        }
+        private List<string> ReadResourcepacks(XElement resourcepacks)
+        {
+            List<string> result = new List<string>();
+            foreach (var item in resourcepacks.XPathSelectElements("item"))
+            {
+                result.Add(item.Value);
+            }
+
             return result;
         }
     }

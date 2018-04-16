@@ -13,7 +13,7 @@ namespace MCLauncher.Reader
             XElement players = document.XPathSelectElement("root/players");
 
             List<Player> result = new List<Player>();
-            foreach (var player in players.Descendants("item"))
+            foreach (var player in players.XPathSelectElements("item"))
             {
                 result.Add(ReadPlayer(player));
             }
