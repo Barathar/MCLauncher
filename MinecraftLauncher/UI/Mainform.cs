@@ -124,7 +124,10 @@ namespace MinecraftLauncher.UI
             for (int index = serverPanel.Controls.Count - 1; index >= 0; index--)
             {
                 if (launcher.Server.Any(e => e.Version == serverPanel.Controls[index].Name))
+                {
+                    (serverPanel.Controls[index] as ServerControl).UpdatePatchFileInfo();
                     continue;
+                }
 
                 serverPanel.Controls.Remove(serverPanel.Controls[index]);
             }

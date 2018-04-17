@@ -54,6 +54,10 @@ namespace MCLauncher.UI
         {
             return downloadThread.IsBusy;
         }
+        public void UpdatePatchFileInfo()
+        {
+            DownloadPatchFileInfo();
+        }
 
         private void OnTimerTick(Object sender, EventArgs eventArgs)
         {
@@ -252,7 +256,7 @@ namespace MCLauncher.UI
                 CleanFiles();
             }
             else
-            {                
+            {
                 PatchLauncherProfile();
                 PatchOptions();
                 CopyServersFile();
@@ -270,9 +274,10 @@ namespace MCLauncher.UI
         private void PatchMinecraftLauncher()
         {
             if (!File.Exists(fileInfos.MinecraftLauncherFilename))
+            {
                 Downloader.Download(fileInfos.DefaultMinecraftLauncherFile, fileInfos.MinecraftLauncherFilename);
-
-            OutputConsole.Print($"[Patching] {fileInfos.MinecraftLauncherFilename}");
+                OutputConsole.Print($"[Patching] {fileInfos.MinecraftLauncherFilename}");
+            }
         }
         private void PatchLauncherProfile()
         {
