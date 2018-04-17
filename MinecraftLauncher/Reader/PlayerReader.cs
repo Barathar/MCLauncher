@@ -25,8 +25,8 @@ namespace MCLauncher.Reader
         {
             Player result = new Player
             {
-                Name = XElementExtender.ReadString(player, "name"),
-                Image = XElementExtender.ReadImage(player, "image")
+                Name = XElementExtender.ReadName(player),
+                Image = XElementExtender.ReadImage(player)
             };
 
             OutputConsole.PrintVerbose(result, 2);

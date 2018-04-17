@@ -237,6 +237,9 @@ namespace MCLauncher.UI
             if (patcher.UpdateNeeded)
                 return style.ServerUpdateButtonImage;
 
+            if (!File.Exists(fileInfos.MinecraftLauncherFilename))
+                return ImageManipulation.CreateGrayScaledImage(style.ServerPlayButtonImage as Bitmap);
+
             return style.ServerPlayButtonImage;
         }
 
@@ -244,12 +247,12 @@ namespace MCLauncher.UI
         {
             if (patcher.UpdateNeeded)
             {
+                PatchMinecraftLauncher();
                 PatchFiles();
                 CleanFiles();
             }
             else
-            {
-                PatchMinecraftLauncher();
+            {                
                 PatchLauncherProfile();
                 PatchOptions();
                 CopyServersFile();

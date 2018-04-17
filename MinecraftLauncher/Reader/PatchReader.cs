@@ -1,6 +1,8 @@
-﻿using MCLauncher.Data;
+﻿using MCLauncher.Configuration;
+using MCLauncher.Data;
 using MCLauncher.Utility;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
@@ -21,7 +23,7 @@ namespace MCLauncher.Reader
             return result;
         }
         public List<CleanupDirectory> ReadCleanupDirectories(XDocument document)
-        {           
+        {
             XElement cleanupList = document.XPathSelectElement("root/cleanupDirectoryList");
 
             List<CleanupDirectory> result = new List<CleanupDirectory>();
@@ -37,10 +39,10 @@ namespace MCLauncher.Reader
         {
             PatchFile result = new PatchFile
             {
-                Filename = XElementExtender.ReadString(item, "name"),
-                DownloadUri = XElementExtender.ReadUri(item, "url"),
-                LocalDirectory = XElementExtender.ReadString(item, "relPath"),
-                Hash = XElementExtender.ReadString(item, "hash")
+                Filename = XElementExtender.ReadName(item),
+                DownloadUri = XElementExtender.ReadUri(item),
+                LocalDirectory = XElementExtender.ReadPath(item),
+                Hash = XElementExtender.ReadHash(item)
             };
 
             OutputConsole.PrintVerbose(result, 5);
@@ -50,7 +52,7 @@ namespace MCLauncher.Reader
         {
             CleanupDirectory result = new CleanupDirectory
             {
-                LocalDirectory = item.Value
+                LocalDirectory = Path.Combine(Paths.ExecutingDirectory, item.Value.Replace(@"/", "\\"))
             };
 
             OutputConsole.PrintVerbose(result, 5);

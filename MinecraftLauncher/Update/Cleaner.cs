@@ -15,18 +15,16 @@ namespace MCLauncher.Update
         public void Clean()
         {
             foreach (var directory in CleanupDirectories)
-            {
-                string fullDirectoryName = Path.Combine(Paths.ExecutingDirectory, directory.LocalDirectory);
-                if (!Directory.Exists(fullDirectoryName))
+            {                
+                if (!Directory.Exists(directory.LocalDirectory))
                     continue;
 
-                if (!IsValidSubDirectory(fullDirectoryName))
+                if (!IsValidSubDirectory(directory.LocalDirectory))
                     continue;
 
-                foreach (string file in Directory.GetFiles(fullDirectoryName, "*.*", SearchOption.AllDirectories))
-                {
-                    string relativePath = file.Replace(@"\", "/");
-                    if (PatchFiles.Any(e => relativePath.Contains(e.LocalDirectory)))
+                foreach (string file in Directory.GetFiles(directory.LocalDirectory, "*.*", SearchOption.AllDirectories))
+                {                    
+                    if (PatchFiles.Any(e => file.Contains(e.LocalDirectory)))
                         continue;
 
                     OutputConsole.Print($"[Cleaning] {file}");

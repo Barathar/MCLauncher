@@ -31,7 +31,7 @@ namespace MCLauncher.Reader
 
             Server result = new Server
             {
-                Name = XElementExtender.ReadString(server, "name"),
+                Name = XElementExtender.ReadName(server),
                 Version = XElementExtender.ReadString(server, "version"),
                 Ip = XElementExtender.ReadString(server, "server/url"),
                 State = XElementExtender.ReadString(server, "state"),
@@ -52,7 +52,7 @@ namespace MCLauncher.Reader
         {
             LauncherProfileData result = new LauncherProfileData
             {
-                Name = XElementExtender.ReadString(launcherProfile, "name"),
+                Name = XElementExtender.ReadName(launcherProfile),
                 Type = XElementExtender.ReadString(launcherProfile, "type"),
                 Icon = XElementExtender.ReadString(launcherProfile, "icon"),
                 LastVersionId = XElementExtender.ReadString(launcherProfile, "lastVersionId"),
@@ -68,8 +68,8 @@ namespace MCLauncher.Reader
             Dictionary<string, string> result = new Dictionary<string, string>();
             foreach (var item in options.XPathSelectElements("item"))
             {
-                string key = XElementExtender.ReadString(item, "name");
-                string value = XElementExtender.ReadString(item, "value");
+                string key = XElementExtender.ReadName(item);
+                string value = XElementExtender.ReadValue(item);
 
                 result.Add(key ,value);
             }

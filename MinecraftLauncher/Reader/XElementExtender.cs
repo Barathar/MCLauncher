@@ -11,6 +11,37 @@ namespace MCLauncher.Reader
 {
     public class XElementExtender
     {
+        public static string ReadValue(XElement item)
+        {
+            return ReadString(item, "value");
+        }
+        public static string ReadName(XElement item)
+        {
+            return ReadString(item, "name");
+        }
+        public static Uri ReadUri(XElement item)
+        {
+            return ReadUri(item, "url");
+        }
+        public static string ReadPath(XElement item)
+        {
+            string relPath = XElementExtender.ReadRelativePath(item);            
+            return Path.Combine(Paths.ExecutingDirectory, relPath);
+        }
+        public static string ReadRelativePath(XElement item)
+        {
+            string relPath = XElementExtender.ReadString(item, "relPath");
+            return relPath.Replace(@"/", "\\");
+        }
+        public static string ReadHash(XElement item)
+        {
+            return ReadString(item, "hash");
+        }
+        public static Image ReadImage(XElement item)
+        {
+            return ReadImage(item, "image");
+        }
+
         public static string ReadString(XElement item, string itemName)
         {
             return item.XPathSelectElement(itemName).Value;

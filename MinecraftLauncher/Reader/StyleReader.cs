@@ -21,7 +21,7 @@ namespace MCLauncher.Reader
 
             Style result = new Style
             {
-                LauncherTitle = XElementExtender.ReadString(style, "name"),
+                LauncherTitle = XElementExtender.ReadName(style),
                 LauncherVersion = XElementExtender.ReadString(style, "version"),
                 LauncherWidth = XElementExtender.ReadInteger(style, "width"),
                 LauncherHeight = XElementExtender.ReadInteger(style, "height"),
