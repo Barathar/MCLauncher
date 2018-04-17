@@ -5,8 +5,7 @@ namespace MCLauncher.Configuration
 {
     public static class Paths
     {
-        public static string CurrentDirectory { get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); } }
-        public static string DefaultLauncherExecutable { get { return Path.Combine(CurrentDirectory, "MinecraftLauncher.exe"); } }
+        public static string CurrentDirectory { get { return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location); } }        
         public static string LauncherWorkingDirectory { get { return Path.Combine(CurrentDirectory, ".minecraft"); } }        
 
         public static string LauncherFilesDirectory

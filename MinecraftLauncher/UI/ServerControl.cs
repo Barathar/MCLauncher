@@ -5,6 +5,7 @@ using MCLauncher.Images;
 using MCLauncher.Reader;
 using MCLauncher.Update;
 using MCLauncher.Utility;
+using MCLauncher.Web;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -236,9 +237,6 @@ namespace MCLauncher.UI
             if (patcher.UpdateNeeded)
                 return style.ServerUpdateButtonImage;
 
-            if (!LauncherExecutableExists())
-                return ImageManipulation.CreateGrayScaledImage(style.ServerPlayButtonImage as Bitmap);
-
             return style.ServerPlayButtonImage;
         }
 
@@ -251,6 +249,7 @@ namespace MCLauncher.UI
             }
             else
             {
+                PatchMinecraftLauncher();
                 PatchLauncherProfile();
                 PatchOptions();
                 CopyServersFile();
@@ -265,17 +264,24 @@ namespace MCLauncher.UI
         {
             cleaner.Clean();
         }
+        private void PatchMinecraftLauncher()
+        {
+            if (!File.Exists(fileInfos.MinecraftLauncherFilename))
+                Downloader.Download(fileInfos.DefaultMinecraftLauncherFile, fileInfos.MinecraftLauncherFilename);
+
+            OutputConsole.Print($"[Patching] {fileInfos.MinecraftLauncherFilename}");
+        }
         private void PatchLauncherProfile()
         {
-            LauncherProfilePatcher patcher = new LauncherProfilePatcher(fileInfos.DefaultProfiles);
-            patcher.Patch(fileInfos.ProfilesPath, server.LauncherProfileData);
+            LauncherProfilePatcher patcher = new LauncherProfilePatcher(fileInfos.DefaultLauncherProfilesFile);
+            patcher.Patch(fileInfos.LauncherProfilesFilename, server.LauncherProfileData);
 
-            OutputConsole.Print($"[Patching] {fileInfos.ProfilesPath}");
+            OutputConsole.Print($"[Patching] {fileInfos.LauncherProfilesFilename}");
         }
         private void PatchOptions()
         {
-            OptionsPatcher patcher = new OptionsPatcher(fileInfos.DefaultOptions);
-            string filename = Path.Combine(GetInstallationDirectory(), fileInfos.OptionsPath);
+            OptionsPatcher patcher = new OptionsPatcher(fileInfos.DefaultOptionsFile);
+            string filename = Path.Combine(GetInstallationDirectory(), fileInfos.OptionsFilename);
             patcher.Patch(filename, server.Options);
 
             OutputConsole.Print($"[Patching] {filename}");
@@ -297,12 +303,12 @@ namespace MCLauncher.UI
         }
         private void LaunchMinecraft()
         {
-            if (!LauncherExecutableExists())
+            if (!File.Exists(fileInfos.MinecraftLauncherFilename))
                 return;
 
             string parameters = $"--workDir {Paths.LauncherWorkingDirectory}";
-            Process.Start(fileInfos.Executable, parameters);
-            OutputConsole.Print($"[Running] {fileInfos.Executable}'\n with parameters '{parameters}'");
+            Process.Start(fileInfos.MinecraftLauncherFilename, parameters);
+            OutputConsole.Print($"[Running] {fileInfos.MinecraftLauncherFilename}'\n with parameters '{parameters}'");
         }
         private void UninstallFiles()
         {
@@ -325,10 +331,6 @@ namespace MCLauncher.UI
         private string GetInstallationDirectory()
         {
             return Path.Combine(Paths.CurrentDirectory, server.Version);
-        }
-        private bool LauncherExecutableExists()
-        {
-            return File.Exists(fileInfos.Executable);
         }
         private void EnableTimer(bool enable)
         {

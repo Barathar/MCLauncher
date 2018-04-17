@@ -1,14 +1,21 @@
 ﻿using MCLauncher.Configuration;
 using System;
+using System.IO;
 
 namespace MCLauncher.Data
 {
     public class FileInfos
     {
-        public Uri DefaultProfiles { get; set; }
-        public string ProfilesPath { get; set; }
-        public string Executable { get; set; } = Paths.DefaultLauncherExecutable;
-        public Uri DefaultOptions { get; set; }
-        public string OptionsPath { get; set; }
+        // launcher_profiles.json
+        public Uri DefaultLauncherProfilesFile { get; set; }
+        public string LauncherProfilesFilename { get; set; }
+
+        // options.txt
+        public Uri DefaultOptionsFile { get; set; }
+        public string OptionsFilename { get; set; }
+
+        // minecraftLauncher.exe
+        public Uri DefaultMinecraftLauncherFile { get; set; }
+        public string MinecraftLauncherFilename { get; set; }
     }
 }

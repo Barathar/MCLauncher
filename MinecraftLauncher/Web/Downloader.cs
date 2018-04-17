@@ -20,6 +20,7 @@ namespace MCLauncher.Web
                         Directory.CreateDirectory(path);
 
                     client.DownloadFile(uri, target);
+                    OutputConsole.PrintVerbose($"[Download] '{uri}'.", 2);
                 }
             }
             catch (WebException e)
