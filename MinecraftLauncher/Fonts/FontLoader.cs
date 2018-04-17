@@ -22,7 +22,7 @@ namespace MCLauncher.Fonts
 
         private static void Load()
         {
-            Console.WriteLine($"[Loading font] {Paths.MinecraftFont}");
+            Console.WriteLine($"[Loading font] {Paths.MinecraftFontFile}");
 
             if (!FontExists())
                 CreateFontOnDisc();
@@ -32,16 +32,16 @@ namespace MCLauncher.Fonts
 
         private static bool FontExists()
         {
-            return File.Exists(Paths.MinecraftFont);
+            return File.Exists(Paths.MinecraftFontFile);
         }
         private static void CreateFontOnDisc()
         {
-            File.WriteAllBytes(Paths.MinecraftFont, Properties.Resources.Minecraft);
+            File.WriteAllBytes(Paths.MinecraftFontFile, Properties.Resources.Minecraft);
         }
         private static void LoadFont()
         {
             PrivateFontCollection pfc = new PrivateFontCollection();
-            pfc.AddFontFile(Paths.MinecraftFont);
+            pfc.AddFontFile(Paths.MinecraftFontFile);
 
             minecraftFont = pfc;
         }

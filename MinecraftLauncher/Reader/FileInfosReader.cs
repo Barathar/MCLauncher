@@ -16,11 +16,11 @@ namespace MCLauncher.Reader
             FileInfos result = new FileInfos()
             { 
                 DefaultLauncherProfilesFile = XElementExtender.ReadUri(launcher, "launcherProfilesJson/url"),
-                LauncherProfilesFilename = Path.Combine(Paths.CurrentDirectory, XElementExtender.ReadString(launcher, "launcherProfilesJson/relPath")),
+                LauncherProfilesFilename = Path.Combine(Paths.ExecutingDirectory, XElementExtender.ReadString(launcher, "launcherProfilesJson/relPath")),
                 DefaultOptionsFile = XElementExtender.ReadUri(launcher, "optionsTxt/url"),
                 OptionsFilename = XElementExtender.ReadString(launcher, "optionsTxt/relPath"),
                 DefaultMinecraftLauncherFile = XElementExtender.ReadUri(launcher, "minecraftExecutable/url"),
-                MinecraftLauncherFilename = Path.Combine(Paths.CurrentDirectory, XElementExtender.ReadString(launcher, "minecraftExecutable/relPath"))
+                MinecraftLauncherFilename = Path.Combine(Paths.ExecutingDirectory, XElementExtender.ReadString(launcher, "minecraftExecutable/relPath"))
             };
 
             OutputConsole.PrintVerbose(result, 1);

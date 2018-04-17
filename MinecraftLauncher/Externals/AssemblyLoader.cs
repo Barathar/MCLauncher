@@ -1,6 +1,5 @@
 ﻿using MCLauncher.Configuration;
 using System;
-using System.Drawing.Text;
 using System.IO;
 
 namespace MCLauncher.Externals
@@ -9,7 +8,7 @@ namespace MCLauncher.Externals
     {        
         public static void Load()
         {
-            Console.WriteLine($"[Loading assembly] {Paths.JsonAssembly}");
+            Console.WriteLine($"[Loading assembly] {Paths.JsonAssemblyFile}");
 
             if (!AssemblyExists())
                 CreateAssemblyOnDisc();
@@ -17,11 +16,11 @@ namespace MCLauncher.Externals
 
         private static bool AssemblyExists()
         {
-            return File.Exists(Paths.JsonAssembly);
+            return File.Exists(Paths.JsonAssemblyFile);
         }
         private static void CreateAssemblyOnDisc()
         {
-            File.WriteAllBytes(Paths.JsonAssembly, Properties.Resources.Newtonsoft_Json);
+            File.WriteAllBytes(Paths.JsonAssemblyFile, Properties.Resources.Newtonsoft_Json);
         }
     }
 }

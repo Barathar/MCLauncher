@@ -123,7 +123,7 @@
     <Compile Include="Update\Cleaner.cs" />
     <Compile Include="Update\OptionsPatcher.cs" />
     <Compile Include="Update\Uninstaller.cs" />
-    <Compile Include="Utility\StartupCheck.cs" />
+    <Compile Include="Configuration\Startup.cs" />
     <Compile Include="Web\Downloader.cs" />
     <Compile Include="Update\Patcher.cs" />
     <Compile Include="Fonts\FontLoader.cs" />

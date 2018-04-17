@@ -16,7 +16,7 @@ namespace MCLauncher.Update
         {
             foreach (var directory in CleanupDirectories)
             {
-                string fullDirectoryName = Path.Combine(Paths.CurrentDirectory, directory.LocalDirectory);
+                string fullDirectoryName = Path.Combine(Paths.ExecutingDirectory, directory.LocalDirectory);
                 if (!Directory.Exists(fullDirectoryName))
                     continue;
 
@@ -39,7 +39,7 @@ namespace MCLauncher.Update
         private bool IsValidSubDirectory(string filename)
         {
             DirectoryInfo currentDir = new DirectoryInfo(filename);
-            DirectoryInfo compareDir = new DirectoryInfo(Paths.CurrentDirectory);
+            DirectoryInfo compareDir = new DirectoryInfo(Paths.ExecutingDirectory);
 
             while (currentDir.Parent != null)
             {

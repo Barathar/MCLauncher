@@ -107,7 +107,7 @@ namespace MinecraftLauncher.UI
         private void UpdateLauncher(string webresponse)
         {
             XDocument document = XDocument.Parse(webresponse, LoadOptions.None);
-            StartupCheck.CheckForNewVersion(document);
+            Startup.CheckForNewVersion(document);
             Launcher launcher = new LauncherReader().Read(document);
             UpdateControls(launcher);
         }

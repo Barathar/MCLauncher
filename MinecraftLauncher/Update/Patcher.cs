@@ -25,7 +25,7 @@ namespace MCLauncher.Update
             {
                 UpdateProgress?.Invoke((100 * index / updateableFiles.Count));
                 OutputConsole.Print($"[Updating] [{index}/{updateableFiles.Count}] {file.LocalDirectory}");
-                Downloader.Download(file.DownloadUri, Path.Combine(Paths.CurrentDirectory, file.LocalDirectory));
+                Downloader.Download(file.DownloadUri, Path.Combine(Paths.ExecutingDirectory, file.LocalDirectory));
                 index++;
             }
             OutputConsole.Print($"[Updating done]");
@@ -36,7 +36,7 @@ namespace MCLauncher.Update
             List<PatchFile> result = new List<PatchFile>();
             foreach (var file in PatchFiles)
             {
-                string localFilename = Path.Combine(Paths.CurrentDirectory, file.LocalDirectory);
+                string localFilename = Path.Combine(Paths.ExecutingDirectory, file.LocalDirectory);
                 if (File.Exists(localFilename))
                 {
                     string hash = MD5Hash.FromFile(localFilename);
@@ -55,7 +55,7 @@ namespace MCLauncher.Update
         private bool IsValidSubDirectory(string filename)
         {
             DirectoryInfo currentDir = new DirectoryInfo(filename);
-            DirectoryInfo compareDir = new DirectoryInfo(Paths.CurrentDirectory);
+            DirectoryInfo compareDir = new DirectoryInfo(Paths.ExecutingDirectory);
 
             while (currentDir.Parent != null)
             {

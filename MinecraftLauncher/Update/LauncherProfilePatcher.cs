@@ -89,7 +89,7 @@ namespace MCLauncher.Update
         }
         private JProperty CreateGameDirectory(LauncherProfileData data)
         {
-            string gameDir = Path.Combine(Paths.CurrentDirectory, data.GameDirectory);
+            string gameDir = Path.Combine(Paths.ExecutingDirectory, data.GameDirectory);
             return new JProperty("gameDir", gameDir);
         }
         private JProperty CreateResolution()

@@ -21,7 +21,7 @@ namespace MCLauncher.Update
         private bool IsValidSubDirectory(string filename)
         {
             DirectoryInfo currentDir = new DirectoryInfo(filename);
-            DirectoryInfo compareDir = new DirectoryInfo(Paths.CurrentDirectory);
+            DirectoryInfo compareDir = new DirectoryInfo(Paths.ExecutingDirectory);
 
             while (currentDir.Parent != null)
             {

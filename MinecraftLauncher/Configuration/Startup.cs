@@ -1,23 +1,29 @@
-﻿using MCLauncher.Configuration;
-using MCLauncher.Reader;
+﻿using MCLauncher.Reader;
+using MCLauncher.Utility;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
 
-namespace MCLauncher.Utility
+namespace MCLauncher.Configuration
 {
-    public static class StartupCheck
+    public static class Startup
     {
         public static void CheckForValidExecutablePath()
         {
-            if (Paths.CurrentDirectory.Any(x => Char.IsWhiteSpace(x)))
+            if (Paths.ExecutingDirectory.Any(x => Char.IsWhiteSpace(x)))
             {
-                MessageBox.Show($"Executable path with whitespaces is not allowed! ({Paths.CurrentDirectory}).");
+                MessageBox.Show($"Executable path with whitespaces is not allowed! ({Paths.ExecutingDirectory}).");
                 return;
             }
+        }
+        public static void MakeSureConfigurationDirectoryExists()
+        {
+            if (!Directory.Exists(Paths.ConfigurationsDirectory))
+                Directory.CreateDirectory(Paths.ConfigurationsDirectory);
         }
         public static void CheckForNewVersion(XDocument document)
         {
@@ -34,6 +40,6 @@ namespace MCLauncher.Utility
                 Uri uri = XElementExtender.ReadUri(launcherVersion, "url");
                 Process.Start(uri.ToString());
             }
-        }
+        }        
     }
 }

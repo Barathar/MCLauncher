@@ -294,7 +294,7 @@ namespace MCLauncher.UI
                 OutputConsole.Print($"[Deleting] {Paths.ServersFile}");
             }
 
-            string sourceFile = Path.Combine(Paths.CurrentDirectory, server.Version, "Servers.dat");
+            string sourceFile = Path.Combine(Paths.ExecutingDirectory, server.Version, "Servers.dat");
             if (File.Exists(sourceFile))
             {
                 File.Copy(sourceFile, Paths.ServersFile);
@@ -306,7 +306,7 @@ namespace MCLauncher.UI
             if (!File.Exists(fileInfos.MinecraftLauncherFilename))
                 return;
 
-            string parameters = $"--workDir {Paths.LauncherWorkingDirectory}";
+            string parameters = $"--workDir {Paths.MinecraftDirectory}";
             Process.Start(fileInfos.MinecraftLauncherFilename, parameters);
             OutputConsole.Print($"[Running] {fileInfos.MinecraftLauncherFilename}'\n with parameters '{parameters}'");
         }
@@ -330,7 +330,7 @@ namespace MCLauncher.UI
 
         private string GetInstallationDirectory()
         {
-            return Path.Combine(Paths.CurrentDirectory, server.Version);
+            return Path.Combine(Paths.ExecutingDirectory, server.Version);
         }
         private void EnableTimer(bool enable)
         {

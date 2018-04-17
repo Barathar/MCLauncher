@@ -1,4 +1,4 @@
-﻿using MCLauncher.Utility;
+﻿using MCLauncher.Configuration;
 using MinecraftLauncher.UI;
 using System;
 using System.Windows.Forms;
@@ -13,7 +13,8 @@ namespace MinecraftLauncher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            StartupCheck.CheckForValidExecutablePath();
+            Startup.CheckForValidExecutablePath();
+            Startup.MakeSureConfigurationDirectoryExists();
 
             Application.Run(new Mainform());
         }

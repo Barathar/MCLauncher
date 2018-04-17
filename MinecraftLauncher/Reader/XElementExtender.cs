@@ -24,7 +24,7 @@ namespace MCLauncher.Reader
             try
             {                
                 string relativePath = item.XPathSelectElement($"{itemName}/relPath").Value;
-                string filename = Path.Combine(Paths.CurrentDirectory, relativePath.Replace(@"/", "\\"));
+                string filename = Path.Combine(Paths.ExecutingDirectory, relativePath.Replace(@"/", "\\"));
                 if (File.Exists(filename))
                 {
                     string hash = item.XPathSelectElement($"{itemName}/hash").Value;
