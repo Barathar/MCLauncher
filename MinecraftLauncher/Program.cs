@@ -13,7 +13,9 @@ namespace MinecraftLauncher
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Startup.CheckForValidExecutablePath();
+            if (!Startup.HasValidExecutablePath())
+                return;
+
             Startup.MakeSureConfigurationDirectoryExists();
 
             Application.Run(new Mainform());

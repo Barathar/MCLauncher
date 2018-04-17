@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -12,13 +13,15 @@ namespace MCLauncher.Configuration
 {
     public static class Startup
     {
-        public static void CheckForValidExecutablePath()
+        public static bool HasValidExecutablePath()
         {
             if (Paths.ExecutingDirectory.Any(x => Char.IsWhiteSpace(x)))
             {
-                MessageBox.Show($"Executable path with whitespaces is not allowed! ({Paths.ExecutingDirectory}).");
-                return;
+                MessageBox.Show($"Executable path with whitespaces is not allowed! ({Paths.ExecutingDirectory}).", "Invalid executable path", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return false;
             }
+
+            return true;
         }
         public static void MakeSureConfigurationDirectoryExists()
         {
