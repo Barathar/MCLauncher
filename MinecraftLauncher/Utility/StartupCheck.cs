@@ -19,10 +19,9 @@ namespace MCLauncher.Utility
                 return;
             }
         }
-
         public static void CheckForNewVersion(XDocument document)
         {
-            XElement launcherVersion = document.XPathSelectElement("root/launcher/launcherVersion");
+            XElement launcherVersion = document.XPathSelectElement("root/launcher/launcherExecutable");
             string hash = XElementExtender.ReadString(launcherVersion, "hash");
 
             string filename = Process.GetCurrentProcess().MainModule.FileName;

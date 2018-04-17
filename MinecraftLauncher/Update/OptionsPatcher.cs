@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace MCLauncher.Update
 {
@@ -15,24 +14,27 @@ namespace MCLauncher.Update
             this.defaultOptions = defaultOptions;
         }
 
-        public void Patch(string filename, List<string> resourcepacks)
-        {            
+        public void Patch(string filename, Dictionary<string, string> options)
+        {
             if (!File.Exists(filename))
                 Downloader.Download(defaultOptions, filename);
 
-            Dictionary<string, string> options = ReadOptions(filename);
-            UpdateResourcepacks(ref options, resourcepacks);
+            Dictionary<string, string> optionsOnDisc = ReadOptions(filename);
+            UpdateResourcepacks(ref optionsOnDisc, options);
             WriteOptions(options, filename);
         }
 
-        private void UpdateResourcepacks(ref Dictionary<string, string> options, List<string> resourcepacks)
+        private void UpdateResourcepacks(ref Dictionary<string, string> optionsOnDisc, Dictionary<string, string> options)
         {
-            options["resourcePacks"] = $"[\"{string.Join("\",\"", resourcepacks)}\"]";
+            foreach (var key in options.Keys)
+            {
+                optionsOnDisc[$"{key}"] = options[key];
+            }
         }
         private Dictionary<string, string> ReadOptions(string filename)
         {
             Dictionary<string, string> result = new Dictionary<string, string>();
-            foreach(var line in File.ReadAllLines(filename))
+            foreach (var line in File.ReadAllLines(filename))
             {
                 string[] keyValuePair = line.Split(':');
 

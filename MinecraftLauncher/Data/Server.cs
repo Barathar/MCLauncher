@@ -18,7 +18,7 @@ namespace MCLauncher.Data
         [SkipProperty]
         public LauncherProfileData LauncherProfileData { get; set; }
         [SkipProperty]
-        public List<string> Resourcepacks { get; set; }
+        public Dictionary<string, string> Options { get; set; }
         [SkipProperty]
         public Image Image { get; set; } = Properties.Resources._default;
         [SkipProperty]

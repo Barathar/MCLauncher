@@ -276,7 +276,7 @@ namespace MCLauncher.UI
         {
             OptionsPatcher patcher = new OptionsPatcher(fileInfos.DefaultOptions);
             string filename = Path.Combine(GetInstallationDirectory(), fileInfos.OptionsPath);
-            patcher.Patch(filename, server.Resourcepacks);
+            patcher.Patch(filename, server.Options);
 
             OutputConsole.Print($"[Patching] {filename}");
         }

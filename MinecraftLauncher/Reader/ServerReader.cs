@@ -27,7 +27,7 @@ namespace MCLauncher.Reader
         {
             XElement images = server.XPathSelectElement("style/images");
             XElement launcherProfile = server.XPathSelectElement("launcherProfile");
-            XElement resourcepacks = server.XPathSelectElement("options/resourcepacks");
+            XElement options = server.XPathSelectElement("options");
 
             Server result = new Server
             {
@@ -40,7 +40,7 @@ namespace MCLauncher.Reader
                 PatchFilesUri = XElementExtender.ReadUri(server, "patchUrl"),
                 Image = XElementExtender.ReadImage(images, "background") ?? Properties.Resources.filenotfound,
                 LauncherProfileData = ReadLauncherProfileData(launcherProfile),
-                Resourcepacks = ReadResourcepacks(resourcepacks)
+                Options = ReadOptions(options)
             };
 
             result.GrayScaledImage = ImageManipulation.CreateGrayScaledImage(result.Image as Bitmap);
@@ -63,12 +63,15 @@ namespace MCLauncher.Reader
             OutputConsole.PrintVerbose(result, 1);
             return result;
         }
-        private List<string> ReadResourcepacks(XElement resourcepacks)
+        private Dictionary<string, string> ReadOptions(XElement options)
         {
-            List<string> result = new List<string>();
-            foreach (var item in resourcepacks.XPathSelectElements("item"))
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            foreach (var item in options.XPathSelectElements("item"))
             {
-                result.Add(item.Value);
+                string key = XElementExtender.ReadString(item, "name");
+                string value = XElementExtender.ReadString(item, "value");
+
+                result.Add(key ,value);
             }
 
             return result;
