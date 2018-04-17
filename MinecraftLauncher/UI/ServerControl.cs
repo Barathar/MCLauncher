@@ -302,7 +302,7 @@ namespace MCLauncher.UI
                 OutputConsole.Print($"[Deleting] {Paths.ServersFile}");
             }
 
-            string sourceFile = Path.Combine(Paths.ExecutingDirectory, server.Version, "Servers.dat");
+            string sourceFile = Path.Combine(GetInstallationDirectory(), "Servers.dat");
             if (File.Exists(sourceFile))
             {
                 File.Copy(sourceFile, Paths.ServersFile);

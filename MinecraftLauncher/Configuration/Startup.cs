@@ -4,7 +4,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.XPath;
@@ -30,19 +29,18 @@ namespace MCLauncher.Configuration
         }
         public static void CheckForNewVersion(XDocument document)
         {
-            XElement launcherVersion = document.XPathSelectElement("root/launcher/launcherExecutable");
-            string hash = XElementExtender.ReadString(launcherVersion, "hash");
+            XElement launcherExecutable = document.XPathSelectElement("root/launcher/launcherExecutable");
+            string webHash = XElementExtender.ReadHash(launcherExecutable);
+            string localHash = MD5Hash.FromFile(Paths.ExecutingFile);
 
-            string filename = Process.GetCurrentProcess().MainModule.FileName;
-            string compareHash = MD5Hash.FromFile(filename);
-            if (hash == compareHash)
+            if (webHash == localHash)
                 return;
 
             if (MessageBox.Show("There is a new version of this software available. Do you want to download the latest version?", "New Version", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
-                Uri uri = XElementExtender.ReadUri(launcherVersion, "url");
+                Uri uri = XElementExtender.ReadUri(launcherExecutable);
                 Process.Start(uri.ToString());
             }
-        }        
+        }
     }
 }
