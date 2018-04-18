@@ -97,7 +97,6 @@
             this.consoleTextBox.Multiline = true;
             this.consoleTextBox.Name = "consoleTextBox";
             this.consoleTextBox.ReadOnly = true;
-            this.consoleTextBox.ShortcutsEnabled = false;
             this.consoleTextBox.Size = new System.Drawing.Size(624, 495);
             this.consoleTextBox.TabIndex = 5;
             // 
