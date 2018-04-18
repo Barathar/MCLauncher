@@ -21,7 +21,7 @@ namespace MCLauncher.Update
 
             Dictionary<string, string> optionsOnDisc = ReadOptions(filename);
             UpdateResourcepacks(ref optionsOnDisc, options);
-            WriteOptions(options, filename);
+            WriteOptions(optionsOnDisc, filename);
         }
 
         private void UpdateResourcepacks(ref Dictionary<string, string> optionsOnDisc, Dictionary<string, string> options)
