@@ -20,7 +20,8 @@ namespace MCLauncher.Reader
                 DefaultOptionsFile = XElementExtender.ReadUri(optionsTxt),
                 OptionsFilename = XElementExtender.ReadRelativePath(optionsTxt),
                 DefaultMinecraftLauncherFile = XElementExtender.ReadUri(minecraftExecutable),
-                MinecraftLauncherFilename = XElementExtender.ReadPath(minecraftExecutable)
+                MinecraftLauncherFilename = XElementExtender.ReadPath(minecraftExecutable),
+                MinecraftLauncherHash = XElementExtender.ReadHash(minecraftExecutable)
             };
 
             OutputConsole.PrintVerbose(result, 1);

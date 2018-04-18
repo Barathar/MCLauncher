@@ -273,7 +273,7 @@ namespace MCLauncher.UI
         }
         private void PatchMinecraftLauncher()
         {
-            if (!File.Exists(fileInfos.MinecraftLauncherFilename))
+            if (!File.Exists(fileInfos.MinecraftLauncherFilename) || fileInfos.MinecraftLauncherHash != MD5Hash.FromFile(fileInfos.MinecraftLauncherFilename))
             {
                 Downloader.Download(fileInfos.DefaultMinecraftLauncherFile, fileInfos.MinecraftLauncherFilename);
                 OutputConsole.Print($"[Patching] {fileInfos.MinecraftLauncherFilename}");

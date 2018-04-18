@@ -16,6 +16,7 @@ namespace MCLauncher.Data
 
         // minecraftLauncher.exe
         public Uri DefaultMinecraftLauncherFile { get; set; }
+        public string MinecraftLauncherHash { get; set; }
         public string MinecraftLauncherFilename { get; set; }
     }
 }
