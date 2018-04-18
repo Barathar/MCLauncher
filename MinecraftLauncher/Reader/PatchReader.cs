@@ -52,7 +52,7 @@ namespace MCLauncher.Reader
         {
             CleanupDirectory result = new CleanupDirectory
             {
-                LocalDirectory = XElementExtender.ReadPath(item);
+                LocalDirectory = XElementExtender.ReadPath(item)
             };
 
             OutputConsole.PrintVerbose(result, 5);
