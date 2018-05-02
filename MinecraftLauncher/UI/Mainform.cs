@@ -174,6 +174,7 @@ namespace MinecraftLauncher.UI
             Height = style.LauncherHeight;
             serverPanel.Width = style.ServerWidth;
             overlay.Width = style.ServerWidth + 20;
+            CenterToScreen();
         }
         private void UpdateSettingsDialog(Style style)
         {
