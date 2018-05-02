@@ -5,6 +5,7 @@ using MCLauncher.Reader;
 using MCLauncher.UI;
 using MCLauncher.Utility;
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Windows.Forms;
@@ -25,7 +26,7 @@ namespace MinecraftLauncher.UI
             OutputConsole.Print(typeof(Paths));
 
             AssemblyLoader.Load();
-            Settings.Default.Load();            
+            Settings.Default.Load();
         }
 
         private void InitializeImages()
@@ -41,6 +42,11 @@ namespace MinecraftLauncher.UI
         {
             DownloadLauncherFromWeb();
         }
+        private void OnClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.DialogLocation = Location;
+            Settings.Default.Save();
+        }
         private void OnSettingsButtonClicked(object sender, EventArgs e)
         {
             ShowSettingsDialog();
@@ -53,7 +59,7 @@ namespace MinecraftLauncher.UI
         {
             if (e.Error != null)
                 return;
-            
+
             UpdateLauncher(e.Result);
         }
 
@@ -174,8 +180,29 @@ namespace MinecraftLauncher.UI
             Height = style.LauncherHeight;
             serverPanel.Width = style.ServerWidth;
             overlay.Width = style.ServerWidth + 20;
-            CenterToScreen();
+
+            if (HasValidSavedWindowPosition())
+                Location = Settings.Default.DialogLocation;
+            else
+                CenterToScreen();
         }
+
+        private bool HasValidSavedWindowPosition()
+        {
+            Rectangle currentScreen = Screen.FromControl(this).Bounds;
+
+            if (Settings.Default.DialogLocation.X < 0)
+                return false;
+            if (Settings.Default.DialogLocation.X >= currentScreen.Width - Size.Width)
+                return false;
+            if (Settings.Default.DialogLocation.Y < 0)
+                return false;
+            if (Settings.Default.DialogLocation.Y >= currentScreen.Height - Size.Height)
+                return false;
+
+            return true;
+        }
+
         private void UpdateSettingsDialog(Style style)
         {
             settingsDialog = new SettingsDialog(style);

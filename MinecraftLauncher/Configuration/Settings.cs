@@ -29,6 +29,7 @@ namespace MCLauncher.Configuration
         public bool ShowDebugConsole { get; set; } = false;
         public bool DebugVerbose { get; set; } = false;
         public int VerboseLevel { get; set; } = 1;
+        public Point DialogLocation { get; set; } = new Point(-1, -1);
 
         public void Load()
         {
