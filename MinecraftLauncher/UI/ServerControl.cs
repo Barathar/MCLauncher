@@ -115,6 +115,14 @@ namespace MCLauncher.UI
         {
             ShowPatchNotes();
         }
+        private void OnMouseHover(object sender, EventArgs e)
+        {
+            (sender as PictureBox).Image = ImageManipulation.CreateLightedImage((sender as PictureBox).Image as Bitmap, 50);
+        }
+        private void OnMouseLeave(object sender, EventArgs e)
+        {
+            UpdateButtons();
+        }
 
         private void InitializeSize()
         {
@@ -229,14 +237,18 @@ namespace MCLauncher.UI
             progressBar.Value = 0;
             progressBar.Visible = !InstallationDirectoryExists() || patcher.UpdateNeeded;
 
+            UpdateButtons();
+
+            Visible = true;
+        }
+        private void UpdateButtons()
+        {
             button.Image = GetButtonImage();
 
             uninstallButton.Image = InstallationDirectoryExists() ? style.ServerUninstallButtonImage : style.ServerUninstallButtonGrayScaledImage;
             uninstallButton.Enabled = InstallationDirectoryExists();
 
             patchNotesButton.Image = style.ServerPatchNotesButtonImage;
-
-            Visible = true;
         }
         private Image GetButtonImage()
         {

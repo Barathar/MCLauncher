@@ -1,6 +1,7 @@
 ﻿using MCLauncher.Configuration;
 using MCLauncher.Data;
 using MCLauncher.Externals;
+using MCLauncher.Images;
 using MCLauncher.Reader;
 using MCLauncher.UI;
 using MCLauncher.Utility;
@@ -15,6 +16,9 @@ namespace MinecraftLauncher.UI
 {
     public partial class Mainform : Form
     {
+        private Image currentSettingsButtonImage;
+        private Image currentRefreshButtonImage;
+
         private SettingsDialog settingsDialog;
 
         public Mainform()
@@ -54,6 +58,15 @@ namespace MinecraftLauncher.UI
         private void OnRefreshButtonClicked(object sender, EventArgs e)
         {
             RefreshServerlist();
+        }
+        private void OnMouseHover(object sender, EventArgs e)
+        {
+            (sender as PictureBox).Image = ImageManipulation.CreateLightedImage((sender as PictureBox).Image as Bitmap, 50);
+        }
+        private void OnMouseLeave(object sender, EventArgs e)
+        {
+            refreshButton.Image = currentRefreshButtonImage;
+            settingsButton.Image = currentSettingsButtonImage;
         }
         private void OnDownloadLauncherCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
@@ -168,10 +181,16 @@ namespace MinecraftLauncher.UI
                 serverPanel.BackgroundImage = style.LauncherOverlayImage;
 
             if (!MD5Hash.IsEqual(refreshButton.Image, style.RefreshButtonImage))
+            {
                 refreshButton.Image = style.RefreshButtonImage;
+                currentRefreshButtonImage = style.RefreshButtonImage;
+            }
 
             if (!MD5Hash.IsEqual(settingsButton.Image, style.SettingsButtonImage))
+            {
                 settingsButton.Image = style.SettingsButtonImage;
+                currentSettingsButtonImage = style.SettingsButtonImage;
+            }
 
             consoleTextBox.BackColor = style.DialogBackgroundColor;
             consoleTextBox.ForeColor = style.DialogFontColor;

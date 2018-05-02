@@ -53,13 +53,15 @@
             this.button.BackColor = System.Drawing.Color.Transparent;
             this.button.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.button.Location = new System.Drawing.Point(393, 123);
-            this.button.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button.Margin = new System.Windows.Forms.Padding(4);
             this.button.Name = "button";
             this.button.Size = new System.Drawing.Size(213, 44);
             this.button.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.button.TabIndex = 0;
             this.button.TabStop = false;
             this.button.Click += new System.EventHandler(this.OnButtonClicked);
+            this.button.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.button.MouseHover += new System.EventHandler(this.OnMouseHover);
             // 
             // nameLabel
             // 
@@ -77,7 +79,7 @@
             this.serverStatus.BackColor = System.Drawing.Color.Transparent;
             this.serverStatus.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.serverStatus.Location = new System.Drawing.Point(13, 18);
-            this.serverStatus.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.serverStatus.Margin = new System.Windows.Forms.Padding(4);
             this.serverStatus.Name = "serverStatus";
             this.serverStatus.Size = new System.Drawing.Size(53, 49);
             this.serverStatus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -112,7 +114,7 @@
             this.progressBar.BackColor = System.Drawing.Color.Black;
             this.progressBar.ForeColor = System.Drawing.Color.Black;
             this.progressBar.Location = new System.Drawing.Point(393, 167);
-            this.progressBar.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.progressBar.Margin = new System.Windows.Forms.Padding(4);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(213, 4);
             this.progressBar.Step = 1;
@@ -125,13 +127,15 @@
             this.uninstallButton.BackColor = System.Drawing.Color.Transparent;
             this.uninstallButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.uninstallButton.Location = new System.Drawing.Point(607, 123);
-            this.uninstallButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.uninstallButton.Margin = new System.Windows.Forms.Padding(4);
             this.uninstallButton.Name = "uninstallButton";
             this.uninstallButton.Size = new System.Drawing.Size(24, 22);
             this.uninstallButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.uninstallButton.TabIndex = 6;
             this.uninstallButton.TabStop = false;
             this.uninstallButton.Click += new System.EventHandler(this.OnUninstallButtonClicked);
+            this.uninstallButton.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.uninstallButton.MouseHover += new System.EventHandler(this.OnMouseHover);
             // 
             // patchNotesButton
             // 
@@ -139,13 +143,15 @@
             this.patchNotesButton.BackColor = System.Drawing.Color.Transparent;
             this.patchNotesButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.patchNotesButton.Location = new System.Drawing.Point(607, 144);
-            this.patchNotesButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.patchNotesButton.Margin = new System.Windows.Forms.Padding(4);
             this.patchNotesButton.Name = "patchNotesButton";
             this.patchNotesButton.Size = new System.Drawing.Size(24, 22);
             this.patchNotesButton.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.patchNotesButton.TabIndex = 7;
             this.patchNotesButton.TabStop = false;
             this.patchNotesButton.Click += new System.EventHandler(this.OnPatchNotesButtonClicked);
+            this.patchNotesButton.MouseLeave += new System.EventHandler(this.OnMouseLeave);
+            this.patchNotesButton.MouseHover += new System.EventHandler(this.OnMouseHover);
             // 
             // downloadThread
             // 
@@ -180,7 +186,7 @@
             // 
             this.playersFlowLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.playersFlowLayoutPanel.Location = new System.Drawing.Point(204, 47);
-            this.playersFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.playersFlowLayoutPanel.Margin = new System.Windows.Forms.Padding(4);
             this.playersFlowLayoutPanel.Name = "playersFlowLayoutPanel";
             this.playersFlowLayoutPanel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.playersFlowLayoutPanel.Size = new System.Drawing.Size(427, 28);
@@ -217,7 +223,7 @@
             this.Controls.Add(this.nameLabel);
             this.Controls.Add(this.button);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ServerControl";
             this.Size = new System.Drawing.Size(660, 185);
             ((System.ComponentModel.ISupportInitialize)(this.button)).EndInit();
