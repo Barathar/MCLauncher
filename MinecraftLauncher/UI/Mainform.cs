@@ -58,7 +58,10 @@ namespace MinecraftLauncher.UI
         private void OnDownloadLauncherCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error != null)
+            {
+                Close();
                 return;
+            }
 
             UpdateLauncher(e.Result);
         }
