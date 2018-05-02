@@ -117,10 +117,20 @@ namespace MCLauncher.UI
         }
         private void OnMouseHover(object sender, EventArgs e)
         {
+            UpdateCursor();
+
+            if (IsBusy())                
+                return;
+
             (sender as PictureBox).Image = ImageManipulation.CreateLightedImage((sender as PictureBox).Image as Bitmap, 50);
         }
         private void OnMouseLeave(object sender, EventArgs e)
         {
+            UpdateCursor();
+
+            if (IsBusy())
+                return;
+
             UpdateButtons();
         }
 
@@ -363,6 +373,10 @@ namespace MCLauncher.UI
                 statusUpdateTimer.Start();
             else
                 statusUpdateTimer.Stop();
+        }
+        private void UpdateCursor()
+        {
+            Cursor.Current = IsBusy() ? Cursors.WaitCursor : Cursors.Default;
         }
     }
 }
