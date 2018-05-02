@@ -7,6 +7,7 @@ namespace MCLauncher.Data
     {
         public bool Online { get; set; }
         public string MessageOfTheDay { get; set; }
+        public string GameMode { get; set; }
         public int MaxPlayers { get; set; }
         public int CurrentPlayers { get; set; }
         [SkipProperty]

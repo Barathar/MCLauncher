@@ -169,6 +169,11 @@ namespace MCLauncher.UI
             motdLabel.ForeColor = style.FontColor;
             motdLabel.Text = status.MessageOfTheDay;
 
+            gameModeLabel.Visible = status.Online;
+            gameModeLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], playersLabel.Font.Size);
+            gameModeLabel.ForeColor = style.FontColor;
+            gameModeLabel.Text = status.GameMode;
+
             playersLabel.Visible = status.Online;
             playersLabel.Font = new Font(FontLoader.MinecraftFont.Families[0], playersLabel.Font.Size);
             playersLabel.ForeColor = style.FontColor;

@@ -15,6 +15,7 @@ namespace MCLauncher.Reader
             {
                 Online = XElementExtender.ReadBoolean(root, "online"),
                 MessageOfTheDay = XElementExtender.ReadString(root, "motd"),
+                GameMode = XElementExtender.ReadString(root, "gameType"),
                 MaxPlayers = XElementExtender.ReadInteger(root, "playerMax"),
                 CurrentPlayers = XElementExtender.ReadInteger(root, "playerOnline"),
                 Players = new PlayerReader().Read(document)
