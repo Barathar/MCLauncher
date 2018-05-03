@@ -21,7 +21,7 @@ namespace MinecraftLauncher.UI
 
         private SettingsDialog settingsDialog;
 
-        public Mainform()
+        public Mainform(Style style)
         {
             InitializeComponent();
             InitializeImages();
@@ -31,6 +31,8 @@ namespace MinecraftLauncher.UI
 
             AssemblyLoader.Load();
             Settings.Default.Load();
+
+            UpdateControls(style);
         }
 
         private void InitializeImages()
@@ -71,12 +73,13 @@ namespace MinecraftLauncher.UI
         private void OnDownloadLauncherCompleted(object sender, DownloadStringCompletedEventArgs e)
         {
             if (e.Error != null)
-            {
-                Close();
+            { 
                 return;
             }
 
-            UpdateLauncher(e.Result);
+            XDocument document = XDocument.Parse(e.Result, LoadOptions.None);
+            Launcher launcher = new LauncherReader().Read(document);
+            UpdateServerList(launcher);
         }
 
         // Settingsbutton
@@ -126,21 +129,6 @@ namespace MinecraftLauncher.UI
         }
 
         // UI update
-        private void UpdateLauncher(string webresponse)
-        {
-            XDocument document = XDocument.Parse(webresponse, LoadOptions.None);
-            Startup.CheckForNewVersion(document);
-            Launcher launcher = new LauncherReader().Read(document);
-            UpdateControls(launcher);
-        }
-        private void UpdateControls(Launcher launcher)
-        {
-            UpdateServerList(launcher);
-            UpdateTitle(launcher.Style);
-            UpdateDialogAppearance(launcher.Style);
-            UpdateDialogSize(launcher.Style);
-            UpdateSettingsDialog(launcher.Style);
-        }
         private void UpdateServerList(Launcher launcher)
         {
             for (int index = serverPanel.Controls.Count - 1; index >= 0; index--)
@@ -164,6 +152,13 @@ namespace MinecraftLauncher.UI
                     serverPanel.Controls.Add(control);
                 }
             }
+        }
+        private void UpdateControls(Style style)
+        {
+            UpdateTitle(style);
+            UpdateDialogAppearance(style);
+            UpdateDialogSize(style);
+            UpdateSettingsDialog(style);
         }
         private void UpdateTitle(Style style)
         {
@@ -224,7 +219,6 @@ namespace MinecraftLauncher.UI
 
             return true;
         }
-
         private void UpdateSettingsDialog(Style style)
         {
             settingsDialog = new SettingsDialog(style);
