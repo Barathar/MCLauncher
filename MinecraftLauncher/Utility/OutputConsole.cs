@@ -18,8 +18,6 @@ namespace MCLauncher.Utility
 
     public class OutputConsole : TextWriter
     {
-        private static List<Type> excludes = new List<Type>() { typeof(Bitmap) };
-
         Form form = null;
         TextBox textBox = null;
 
@@ -31,6 +29,9 @@ namespace MCLauncher.Utility
 
         public override void Write(char value)
         {
+            if (!textBox.Visible || !textBox.Enabled)
+                return;
+
             base.Write(value);
             if (form.InvokeRequired)
             {
